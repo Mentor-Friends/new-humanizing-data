@@ -1,3 +1,77 @@
+<div class="container mx-auto my-10 p-6 bg-white shadow-md">
+    <div class="flex items-center">
+        <img id="profileImg" class="w-32 h-32 rounded-full mr-6" src="${the_profile?.the_profile_profilePic?.[0]?.data?.the_profilePic||'https://via.placeholder.com/150'}" alt="Employee Photo">
+        <div>
+            <h1 id="fName" class="text-3xl font-bold">${the_profile?.the_profile_first_name?.[0]?.data?.the_first_name||''} ${the_profile?.the_profile_last_name?.[0]?.data?.the_last_name||''}</h1>
+            <p class="text-gray-700">Software Engineer</p>
+            <p class="text-gray-700">${the_profile?.the_profile_email?.[0]?.data?.the_email||''}</p>
+             <p class="text-gray-700">${the_profile?.the_profile_phone?.[0]?.data?.the_phone||''}</p>
+        </div>
+    </div>
+    
+    <div class="mt-8">
+        <h2 class="text-2xl font-semibold mb-4 ${the_profile?.the_profile_aboutYou?.[0]?.data?.the_aboutYou?'':'hidden'}">Profile</h2>
+        <p class="text-gray-700">${the_profile?.the_profile_aboutYou?.[0]?.data?.the_aboutYou||''}</p>
+    </div>
+    
+    <div class="mt-8">
+        <h2 class="text-2xl font-semibold mb-4 ${the_profile?.the_profile_s_experience?.[0]?.data?.the_experience?'':'hidden'}">Experience</h2>
+        ${the_profile?.the_profile_s_experience?.map((output:any)=>{
+            return`<div class="mb-6">
+            <h3 class="text-xl font-semibold">${output?.data?.the_experience?.the_experience_position?.[0]?.data?.the_position || ''}</h3>
+            <p class="text-gray-700">${output?.data?.the_experience?.the_experience_company?.[0]?.data?.the_company || ''}, ${output?.data?.the_experience?.the_experience_expdobFrom?.[0]?.data?.the_expdobFrom || ''}- ${output?.data?.the_experience?.the_experience_expdobTo?.[0]?.data?.the_expdobTo || ''}</p>
+            <ul class="list-disc list-inside text-gray-700">
+                <li>Developed and maintained web applications using React and Node.js.</li>
+                <li>Led a team of 5 developers in agile project management.</li>
+                <li>Optimized application performance, reducing load times by 30%.</li>
+            </ul>
+        </div>`
+        })||''}
+    </div>
+    
+    <div class="mt-8">
+        <h2 class="text-2xl font-semibold mb-4 ${the_profile?.the_profile_s_education?.[0]?.data?.the_education?'':'hidden'}">Education</h2>
+         ${the_profile?.the_profile_s_education?.map((output:any)=>{
+        return `<div class="mb-6">
+            <h3 class="text-xl font-semibold">${output?.data?.the_education?.the_education_eduLevel?.[0]?.data?.the_eduLevel.toUpperCase() || ''} of ${output?.data?.the_education?.the_education_course?.[0]?.data?.the_course || ''} </h3>
+    
+            <p class="text-gray-700">${output?.data?.the_education?.the_education_institutionName?.[0]?.data?.the_institutionName || ''} , ${output?.data?.the_education?.the_education_dobFrom?.[0]?.data?.the_dobFrom || ''} - ${output?.data?.the_education?.the_education_dobTo?.[0]?.data?.the_dobTo || ''}</p>
+            <p class="text-gray-700">${output?.data?.the_education?.the_education_institutionAddress?.[0]?.data?.the_institutionAddress || ''}</p>   
+    </div>`
+    })||''}
+    </div>
+    
+    <div class="mt-8">
+        <h2 class="text-2xl font-semibold mb-4 ${the_profile?.the_profile_s_skills?.[0]?.data?.the_skills?'':'hidden'}">Skills</h2>
+       <div class="flex flex-wrap">
+        ${the_profile?.the_profile_s_skills?.map((output:any)=>{
+             return`<span class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">${output?.data?.the_skills?.the_skills_language?.[0]?.data?.the_language || ''} - ${output?.data?.the_skills?.the_skills_yearOfExperience?.[0]?.data?.the_yearOfExperience || ''}years</span>`
+        })||''}
+        </div>
+    </div>
+    
+    <div class="mt-8">
+        <h2 class="text-2xl font-semibold mb-4">Certifications</h2>
+        <div class="mb-6">
+            <p class="text-gray-700">Certified Scrum Master (CSM)</p>
+            <p class="text-gray-700">AWS Certified Solutions Architect</p>
+        </div>
+    </div>
+    
+    <div class="mt-8">
+        <h2 class="text-2xl font-semibold mb-4">Projects</h2>
+        <div class="mb-6">
+            <h3 class="text-xl font-semibold">Project Management System</h3>
+            <p class="text-gray-700">A web-based application for managing projects, tasks, and teams, built using React and Node.js.</p>
+        </div>
+        <div class="mb-6">
+            <h3 class="text-xl font-semibold">E-commerce Platform</h3>
+            <p class="text-gray-700">Developed a full-featured e-commerce platform with a user-friendly interface, using AngularJS and MongoDB.</p>
+        </div>
+    </div>
+    </div>
+
+
 <div id="create-profile-modal"
     class="fixed hidden z-50 inset-0 bg-white-900 bg-opacity-60 dark:bg-white-200 dark:bg-opacity-40 overflow-y-auto h-full w-full px-4">
     <div

@@ -5,8 +5,37 @@ import { addEducation,addExperience,previewImage, getProfileData, addDoc,addSkil
 import createProfileModalHTML from '../../modules/profile-modal/create-profile-modal.ts';
 import { initTopNavigation } from '../../modules/top-nav/top-navigation.service.ts';
 import { submitAddProfileForm} from "./profile.service"
+// import { ClassicEditor, Essentials, Bold, Italic, Font, Paragraph, Link, List } from 'ckeditor5';
+// import 'ckeditor5/ckeditor5.css';
 
 
+//CK Editor
+// const editorConfig:any={
+//   plugins: [ Essentials, Bold, Italic, Font, Paragraph, Link, List ],
+//   toolbar: {
+//       items: [
+//           'undo', 'redo', '|', 'bold', 'italic', '|','bulletedList', 'numberedList',
+//           'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor','link',
+//         ]
+//       },
+      
+//       heading: {
+//         options: [
+//           { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+//           // Add other heading options if needed
+//         ]
+//       },
+//       // Apply custom styles to the editor content
+//       fontFamily: {
+//         options: [ 'default', 'Arial, Helvetica, sans-serif', 'Courier New, Courier, monospace' ],
+//         supportAllValues: true
+//       },
+//       fontSize: {
+//         options: [ 10, 12, 14, 'default', 18, 20, 22 ],
+//       supportAllValues: true
+//   },
+//   initialData: '<p id="initialData">This is the initial content with a custom text color.</p>',      
+// }
 export default class extends mainViewClass {
   constructor(params: any) {
     super(params);
@@ -39,6 +68,8 @@ export default class extends mainViewClass {
       initTopNavigation();
     }, 500);
     
+    // const editor:any=document.getElementById(`aboutYou`)
+    //   ClassicEditor.create(editor,editorConfig)
     return `
       ${topNavigation}
       ${profileModal}
@@ -52,7 +83,7 @@ export default class extends mainViewClass {
       </button>
         <form method="post" onsubmit="submitAddProfileForm(event)" class="mt-10">
         <h2 class="dark:text-white text-2xl">Basic Information:</h2>
-          <div class="grid gap-6 mb-6 mt-6 md:grid-cols-3">
+        <div class="grid gap-6 mb-6 mt-6 md:grid-cols-3">
             <div class="form-control">
               <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First Name*</label>
               <input type="text" id="first_name"
@@ -114,17 +145,6 @@ export default class extends mainViewClass {
                 <option value="others">Others</option>
               </select>
             </div>
-            <div class="mb-6">
-              <label for="educationLevel" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Education Level</label>
-              <select id="educationLevel" name="educationLevel" autocomplete="educationLevel-name"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="" >
-                <option value="phd">PHD</option>
-                <option value="masters">Masters</option>
-                <option value="bachelore">Bachelore</option>
-                <option value="highSchool">High School</option>
-              </select>
-            </div>
              <div class="mb-6">
               <label for="department" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Department</label>
               <select id="department" name="department" autocomplete="department-name"
@@ -138,6 +158,13 @@ export default class extends mainViewClass {
                 <option value="humanResource">Human Resource</option>
               </select>
             </div>
+            <div class="mb-6">
+              <label for="workPosition" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Position</label>
+             <input type="text" id="workPosition"
+                name="workPosition"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Position" />
+            </div>
             <div>
               <label for="workExperience" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Total Years of working experience</label>
               <input type="number" id="workExperience"
@@ -149,11 +176,12 @@ export default class extends mainViewClass {
           <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
 
           <h2 class="dark:text-white text-2xl">About You:</h2>
-          <div class="grid gap-6 mb-6 mt-6 md:grid-cols-2">
+          <div class="grid gap-6 mb-6 mt-6 md:grid-cols-1">
           
           <div class="mb-6">
               <label for="addressType" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
-              <textarea 
+              <textarea
+              rows="10" cols="80"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               id="aboutYou" name="aboutYou">
                </textarea>

@@ -132,13 +132,24 @@ export async function addEducation(param: any) {
                 class="input-field bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Institution Address" />
           </div>
+          </div>
+          <div id="input-container" class="grid gap-6 mb-6 mt-6 md:grid-cols-1">
+           <div>
+              <label for="institutionAddress" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+          <textarea name="eduDescription" 
+          id="eduDescription${param}"
+          rows="10" cols="80"
+          class="input-field bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          >
+          </textarea>
+          </div>
         </div> 
         <button 
            class="delete-button text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
           onclick="deleteFn(this)">Delete</button>
       <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
       `;
-  divEle.appendChild(container);
+      divEle.appendChild(container);
 }
 
 // Function to add addEducation fields
@@ -194,6 +205,17 @@ export async function addExperience(param: any) {
                 name="expDateTo"
                 class="input-field-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="To Date" />
+          </div>
+        </div> 
+           <div id="input-container" class="grid gap-6 mb-6 mt-6 md:grid-cols-1">
+           <div>
+          <label for="expDescription" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+          <textarea name="expDescription" 
+          id="expDescription${param}"
+          rows="10" cols="80"
+          class="input-field-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          >
+          </textarea>
           </div>
         </div> 
         <button 
@@ -498,12 +520,8 @@ export async function experience(data: any) {
     container.innerHTML = `
       <div class="experience-item">
           <h3>${opt?.data.the_experience?.the_experience_position?.[0]?.data?.the_position}</h3>
-          <p>${opt?.data.the_experience?.the_experience_company?.[0]?.data?.the_company}, ${opt?.data.the_experience?.the_experience_expdobFrom?.[0]?.data?.the_expdobFrom} - ${opt?.data.the_experience?.the_experience_expdobTo?.[0]?.data?.the_expdobTo}</p>
-          <ul>
-              <li>Developed and maintained web applications using React and Node.js.</li>
-              <li>Led a team of 5 developers in project planning and execution.</li>
-              <li>Implemented RESTful APIs and integrated third-party services.</li>
-          </ul>
+          <p>${opt?.data.the_experience?.the_experience_company?.[0]?.data?.the_company}, ${opt?.data.the_experience?.the_experience_expdobFrom?.[0]?.data?.the_expdobFrom} to ${opt?.data.the_experience?.the_experience_expdobTo?.[0]?.data?.the_expdobTo}</p>
+          <pre style="color:black">${opt?.data?.the_experience?.the_experience_expDescription?.[0]?.data?.the_expDescription}</pre>
       </div>`;
     divEle?.appendChild(container);
   });
@@ -518,7 +536,8 @@ export async function education(data: any) {
             <div class="education-item">
                 <h3>${opt?.data?.the_education.the_education_eduLevel[0].data.the_eduLevel} in ${opt?.data?.the_education.the_education_course[0].data.the_course}</h3>
                 <p>${opt?.data?.the_education.the_education_institutionName[0].data.the_institutionName}, ${opt?.data?.the_education.the_education_dobFrom[0].data.the_dobFrom} - ${opt?.data?.the_education.the_education_dobTo[0].data.the_dobTo}</p>
-            </div>`;
+                <pre style="color:black">${opt?.data?.the_education?.the_education_eduDescription?.[0]?.data?.the_eduDescription}</pre>
+                </div>`;
     divEle?.appendChild(container);
   });
 }
@@ -897,7 +916,6 @@ export async function getProfileData() {
     // console.log("output ->", profileList);
     if(profileList){
     const data = profileList?.the_Profile || "";
-    console.log(profileList,"data")
 
     const inputProfilePic = <HTMLInputElement>(
       document.getElementById("profilePic")
@@ -909,7 +927,7 @@ export async function getProfileData() {
     const inputImgInput = <HTMLInputElement>document.getElementById("imgInput");
     inputImgInput.value =
       data?.the_profile_profilePic?.[0]?.data?.the_profilePic ||
-      profileList?.entity?.person.profile_img || '';
+      profileList?.entity?.person?.profile_img || '';
 
     const inputFirstName = <HTMLInputElement>(
         document.getElementById("first_name")
@@ -929,7 +947,7 @@ export async function getProfileData() {
     const inputEmail = <HTMLInputElement>document.getElementById("email");
     inputEmail.value =
       data?.the_profile_email?.[0]?.data?.the_email ||
-      profileList?.entity?.person.email;
+      profileList?.entity?.person?.email;
 
     const inputPhone = <HTMLInputElement>document.getElementById("phone");
     inputPhone.value =
@@ -948,11 +966,11 @@ export async function getProfileData() {
     inputMaritialStatus.value =
       data?.the_profile_maritialStatus?.[0]?.data?.the_maritialStatus || "";
 
-    const inputEducationLevel = <HTMLInputElement>(
-      document.getElementById("educationLevel")
+    const inputWorkPosition = <HTMLInputElement>(
+      document.getElementById("workPosition")
     );
-    inputEducationLevel.value =
-      data?.the_profile_educationLevel?.[0]?.data?.the_educationLevel || "";
+    inputWorkPosition.value =
+      data?.the_profile_workPosition?.[0]?.data?.the_workPosition || "";
 
     const inputDepartment = <HTMLInputElement>(
       document.getElementById("department")
@@ -1065,6 +1083,12 @@ export async function getProfileData() {
       inputInstitutionAddress.value =
         data?.data?.the_education?.the_education_institutionAddress?.[0]?.data
           ?.the_institutionAddress || "";
+      const inputEduDescription = <HTMLInputElement>(
+            document.getElementById(`eduDescription${index}`)
+          );
+      inputEduDescription.value =
+            data?.data?.the_education?.the_education_eduDescription?.[0]?.data
+              ?.the_eduDescription || "";          
     });
 
     data?.the_profile_s_experience?.map(async (data: any, index: any) => {
@@ -1110,6 +1134,13 @@ export async function getProfileData() {
       inputExpDateTo.value =
         data?.data?.the_experience?.the_experience_expdobTo?.[0]?.data
           ?.the_expdobTo || "";
+
+      const inputExpDescription = <HTMLInputElement>(
+        document.getElementById(`expDescription${index}`)
+          );
+      inputExpDescription.value =
+        data?.data?.the_experience?.the_experience_expDescription?.[0]?.data
+          ?.the_expDescription || "";    
     });
 
     data?.the_profile_s_documents?.map(async (data: any, index: any) => {
@@ -1151,11 +1182,13 @@ export async function getProfileData() {
           ?.the_yearOfExperience || "";
     });
     const inputFullName = <HTMLInputElement>document.getElementById("fullName");
-    inputFullName.innerHTML = !data?profileList?.data?.the_user?.entity?.person?.first_name +" "+profileList?.data?.the_user?.entity?.person.last_name
-    :data.the_profile_first_name?.[0]?.data?.the_first_name +" "+data.the_profile_last_name?.[0]?.data?.the_last_name;
+    inputFullName.innerHTML = data?data?.the_profile_first_name?.[0]?.data?.the_first_name+ " "+data?.the_profile_last_name?.[0]?.data?.the_last_name:profileList.entity?.first_name +" "+profileList.entity?.last_name
+
+    const inputworkingPosition = <HTMLInputElement>document.getElementById("workingPosition");
+    inputworkingPosition.innerHTML=data.the_profile_workPosition?.[0]?.data?.the_workPosition;
 
     const inputContact = <HTMLInputElement>document.getElementById("contact");
-    inputContact.innerHTML =data?.the_profile_email?.[0]?.data?.the_email || profileList?.entity?.person?.email +"||"+data?.the_profile_phone?.[0]?.data?.the_phone||profileList?.data?.the_user?.entity?.person?.phone;
+    inputContact.innerHTML=data?.the_profile_email?.[0]?.data?.the_email || profileList?.entity?.person?.email +"||"+data?.the_profile_phone?.[0]?.data?.the_phone||profileList?.data?.the_user?.entity?.person?.phone;
 
     const inputAbout = <HTMLInputElement>document.getElementById("about");
     if(data?.the_profile_aboutYou){
@@ -1195,6 +1228,7 @@ export async function submitAddProfileForm(e: any) {
       dobTo: inputs[3].value,
       institutionName: inputs[4].value,
       institutionAddress: inputs[5].value,
+      eduDescription: inputs[6].value,
     });
   });
 
@@ -1210,6 +1244,7 @@ export async function submitAddProfileForm(e: any) {
       country: inputs[3].value,
       expdobFrom: inputs[4].value,
       expdobTo: inputs[5].value,
+      expDescription: inputs[6].value,
     });
   });
 
@@ -1282,14 +1317,12 @@ export async function submitAddProfileForm(e: any) {
   }
 }
 
-
-
 export async function createProfile(formValues: any) {
   // let profileIdLen:number=profileList.profileId.length-1
+  if (profileList.profileId){
   profileList?.profileId?.forEach(async function(x:any) {
-    console.log(x,"xyz")
       await DeleteConceptById(x.id);
-})||'';
+})}
 
   const profileStorageData: any = await getLocalStorageData();
   const userId = profileStorageData?.userId;
@@ -1311,6 +1344,7 @@ export async function createProfile(formValues: any) {
   delete formValues.course;
   delete formValues.eduDateFrom;
   delete formValues.eduDateTo;
+  delete formValues.eduDescription;
   delete formValues.institutionName;
   delete formValues.institutionAddress;
   delete formValues.company;
@@ -1319,6 +1353,9 @@ export async function createProfile(formValues: any) {
   delete formValues.expCountry;
   delete formValues.expDateFrom;
   delete formValues.expDateTo;
+  delete formValues.expDescription;
+  delete formValues.language;
+  delete formValues.yearOfExperience;
   await loader(true)
   profileNameConcept = await createEntityInstance(
     "profile",
@@ -1385,7 +1422,7 @@ await loader(false)
       "top-right",
       5000
     );
-    // location.reload();
+    location.reload();
   }, 100);
 
 }
