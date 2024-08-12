@@ -1,6 +1,10 @@
 import { DAYS } from "../../../constants/time.constants";
 import { searchUserAttendance } from "../../../pages/attendance/attendance.helper";
-import { enableButtons, getActiveAttendanceRows, tickTimer } from "../../../pages/attendance/user-attendance/attendance.service";
+import {
+  enableButtons,
+  getActiveAttendanceRows,
+  tickTimer,
+} from "../../../pages/attendance/user-attendance/attendance.service";
 import { getLocalStorageData } from "../../../services/helper.service";
 import { handleAttendanceClick } from "./daily-attendance.service";
 
@@ -13,7 +17,7 @@ export async function dailyAttendanceHTML() {
   const dailyDate = `${new Date().getFullYear()}-${(
     "0" +
     (new Date().getMonth() + 1)
-  ).slice(-2)}-0${new Date().getDate()}`;
+  ).slice(-2)}-${("0" + new Date().getDate()).slice(-2)}`;
   const dailyAttendanceList = await searchUserAttendance(
     userConceptId,
     dailyDate
