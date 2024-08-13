@@ -1,10 +1,10 @@
-import { searchLeave } from "./leave.helper";
+import { fetchLeaveRequest } from "./leave.helper";
 
 export async function populateLeaveRequest() {
   const leaveRequestBody = document.getElementById("leave-requests");
   if (!leaveRequestBody) return;
 
-  const leaveRequests: any[] = await searchLeave();
+  const leaveRequests: any[] = await fetchLeaveRequest();
 
   if (leaveRequests.length == 0) {
     leaveRequestBody.innerHTML = `

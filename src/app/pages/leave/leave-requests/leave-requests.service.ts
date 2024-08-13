@@ -1,27 +1,56 @@
+import { getLocalStorageData } from "../../../services/helper.service";
+import { hasRole } from "../../roles/role.helper";
 import {
-  FilterSearch,
-  SearchLinkMultipleAll,
-  SearchQuery,
-} from "mftsccs-browser";
-import { getRoleId, leaveStatus } from "../leave.helper";
-import {
-  formatUserComposition,
-  getLocalStorageData,
-} from "../../../services/helper.service";
+  fetchLeaveRequest,
+  getEmployeeUsers,
+  leaveStatus,
+} from "../leave.helper";
 
-export async function handleFilterLeaveStatusChange() {
+export async function handleLeaveFilterChange() {
   const filterStatusSelect = document.getElementById(
     "filter-leave-status"
   ) as HTMLSelectElement;
+  const filterUserSelect = document.getElementById(
+    "filter-users"
+  ) as HTMLSelectElement;
   if (!filterStatusSelect) return;
+  let userConceptId =
+    filterUserSelect?.value?.trim && filterUserSelect?.value?.trim() != ""
+      ? parseInt(filterUserSelect?.value?.trim())
+      : undefined;
 
+  // filter only user details if role employee
+  if (await hasRole("ROLE_EMPLOYEE")) {
+    const profileStorageData: any = await getLocalStorageData();
+    const userConceptIdStorage = profileStorageData?.userConcept;
+    userConceptId = userConceptIdStorage;
+  }
   let data: any[] = [];
-  if (filterStatusSelect.value == "") data = await fetchLeaveRequest();
+  if (!filterStatusSelect.value || filterStatusSelect.value == "")
+    data = await fetchLeaveRequest([], userConceptId);
   else
-    data = await fetchLeaveRequest([filterStatusSelect.value as leaveStatus]);
+    data = await fetchLeaveRequest(
+      [filterStatusSelect.value as leaveStatus],
+      userConceptId
+    );
 
   console.log("leaveRequests", data);
   populateLeaveRequests(data);
+}
+
+export async function populateUserDropdown() {
+  const userSelect = document.getElementById("filter-users");
+  if (!userSelect) return;
+  const users: any[] = await getEmployeeUsers();
+
+  let html = '<option value="">Select User</option>';
+  console.log(users, "adsfiuasklfjaskj");
+  users?.map((user) => {
+    html += `<option value="${user.id}">${
+      user?.firstName ? `${user?.firstName} ${user?.lastName}` : user?.email
+    }</option>`;
+  });
+  userSelect.innerHTML = html;
 }
 
 export async function populateLeaveRequests(leaveRequests: any[] = []) {
@@ -87,113 +116,6 @@ export async function populateLeaveRequests(leaveRequests: any[] = []) {
     `;
   }
   leaveRequestBody.innerHTML = leaveRequestHTML;
-}
-
-export async function fetchLeaveRequest(statusFilterItems: leaveStatus[] = []) {
-  const profileStorageData: any = await getLocalStorageData();
-  const token = profileStorageData?.token;
-
-  const roleId = await getRoleId(token);
-  if (roleId) {
-    const searchQuery = new SearchQuery();
-    searchQuery.composition = roleId;
-    searchQuery.listLinkers = ["the_user_s_has_humanizing_data_role_s"];
-    searchQuery.reverse = true;
-    searchQuery.inpage = 100;
-
-    const leaveQuery = new SearchQuery();
-    leaveQuery.fullLinkers = ["the_user_leave_request"];
-    leaveQuery.inpage = 100;
-    leaveQuery.doFilter = true;
-
-    const leaveDetailQuery = new SearchQuery();
-    leaveDetailQuery.selectors = [
-      "the_leave_request_type",
-      "the_leave_request_fromdate",
-      "the_leave_request_todate",
-      "the_leave_request_reason",
-      "the_leave_request_status",
-    ];
-    leaveDetailQuery.doFilter = true;
-    leaveDetailQuery.inpage = 100;
-    leaveDetailQuery.logic = "or";
-    leaveDetailQuery.fullLinkers = ["the_leave_request_status"];
-
-    console.log(statusFilterItems, "yfsakfaskfja");
-    if (Array.isArray(statusFilterItems)) {
-      let filterSearches: FilterSearch[] = [];
-      for (let i = 0; i < statusFilterItems.length; i++) {
-        const element = statusFilterItems[i];
-
-        const statusFilter = new FilterSearch();
-        statusFilter.composition = false;
-        statusFilter.type = "status";
-        statusFilter.logicoperator = "=";
-        statusFilter.search = element;
-
-        filterSearches.push(statusFilter);
-      }
-      leaveDetailQuery.filterSearches = filterSearches;
-    }
-
-    const res = await SearchLinkMultipleAll(
-      [searchQuery, leaveQuery, leaveDetailQuery],
-      token
-    );
-
-    return formatEmployeesLeaveRequests(res);
-  }
-  return [];
-}
-
-function formatEmployeesLeaveRequests(role: any) {
-  console.log("format", role);
-  const users =
-    role?.data?.humanizing_data_internal_role_name
-      ?.the_user_s_has_humanizing_data_role_s_reverse;
-  if (!users) return [];
-
-  let leaveRequests: any[] = [];
-  users.map((user: any) => {
-    const formatedUser = formatUserComposition(user);
-    user?.data?.the_user?.["the_user_leave_request"]?.map((leave: any) => {
-      leaveRequests.push({
-        user: formatedUser,
-        ...formatLeave(leave),
-      });
-    });
-  });
-
-  return leaveRequests;
-}
-
-type LeaveRequest = {
-  id: number;
-  type: string;
-  fromdate: string;
-  todate?: string;
-  reason: string;
-  status: leaveStatus;
-};
-function formatLeave(leave: any): LeaveRequest {
-  return {
-    id: leave?.id,
-    type:
-      leave?.data?.the_leave_request?.the_leave_request_type?.[0]?.data
-        ?.the_type || "",
-    fromdate:
-      leave?.data?.the_leave_request?.the_leave_request_fromdate?.[0]?.data
-        ?.the_fromdate || "",
-    todate:
-      leave?.data?.the_leave_request?.the_leave_request_todate?.[0]?.data
-        ?.the_todate || "",
-    reason:
-      leave?.data?.the_leave_request?.the_leave_request_reason?.[0]?.data
-        ?.the_reason || "",
-    status:
-      leave?.data?.the_leave_request?.the_leave_request_status?.[0]?.data
-        ?.the_status || "",
-  };
 }
 
 function getStatusClass(status: string) {
