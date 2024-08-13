@@ -40,6 +40,7 @@ export default class extends mainViewClass {
             <h1>Welcome to <strong>Humanizing Data</strong> !</h1>
             <p class="mt-8">We're excited to have you on board and look forward to helping you with your software development needs. Our team is dedicated to providing you with the highest level of service and support, and we're here to answer any questions you may have along the way. Thank you for choosing HumanizingData.com, and we can't wait to see what we can achieve together!</p>
           </div>
+          <router-link href="/profile" class="cursor-default float-right bg-green-500 text-white rounded-md px-4 py-2 hover:bg-green-700 transition">Update Your Profile</router-link>
         </div>
         ${
           (await hasRole("ROLE_EMPLOYEE"))

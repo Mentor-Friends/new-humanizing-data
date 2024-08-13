@@ -211,9 +211,9 @@ export async function getJobApplicants(jobProductId: number) {
             </td>
               <td class="border border-slate-300 dark:border-slate-700 p-3 text-slate-500 dark:text-slate-400">
               <button class="text-center bg-green-500 text-white rounded-md px-4 py-2 hover:bg-green-700 transition"
-              onclick="openScheduleInterviewModal('create-setInterview-modal',${
-                applicant?.userConceptId
-              })">
+              onclick="openScheduleInterviewModal('create-setInterview-modal',
+              ${applicant?.userConceptId},
+              )">
               Interview Schedule
               </button>
             </td>

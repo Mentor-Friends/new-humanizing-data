@@ -1,8 +1,6 @@
 import { closeProfileModal } from "../../pages/profile/profile.service";
 import'./profile-modal.style.css';
-// import { submitCreateRoleForm } from "./create-role-modal.service";
 
-// (window as any).submitCreateRoleForm = submitCreateRoleForm;
 
 export default async function createProfileModalHTML() {
     (window as any).closeModal = closeProfileModal;
@@ -24,22 +22,22 @@ export default async function createProfileModalHTML() {
          <div class="resume">
         <header>
             <h1 id="fullName">John Doe</h1>
-            <p>Software Developer</p>
+            <p id="workingPosition">Software Developer</p>
             <p id="contact">Email: johndoe@example.com | Phone: (123) 456-7890</p>
         </header>
-        <section id="profile" style="display:none">
+        <section id="profile" style="display:block">
             <h2>Profile</h2>
             <p id="about" style="color:black">A highly motivated software developer with 5 years of experience in developing web applications. Strong background in JavaScript, HTML, CSS, and modern frameworks.</p>
         </section>
-        <section id="exp" style="display:none">
+        <section id="exp" style="display:block">
           <h2>Experience</h2>
           <div id="experience"></div>
         </section>
-        <section  id="edu" style="display:none">
+        <section id="edu" style="display:block">
             <h2>Education</h2>
               <div id="education"></div>
         </section>
-        <section id="skill" style="display:none">
+        <section id="skill" style="display:block">
             <h2>Skills</h2>
             <ul style="color:black">
             <div id="skills"></div>
