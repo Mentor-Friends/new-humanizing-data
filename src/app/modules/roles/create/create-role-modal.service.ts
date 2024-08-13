@@ -23,7 +23,9 @@ export async function submitCreateRoleForm(e: any) {
   console.log("adding roles", addingRoleBody, responseRole);
   console.log("adding permission", body, responsePermission);
 
-  closeRoleModal();
+  await closeRoleModal();
+
+  location.reload()
 }
 
 export async function submitUpdateRoleForm(e: any) {
