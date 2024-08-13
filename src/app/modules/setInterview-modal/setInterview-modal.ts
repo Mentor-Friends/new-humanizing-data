@@ -166,6 +166,11 @@ export const onChange= async()=>{
     const status=<HTMLInputElement>document.getElementById("status")
     const interviewDateDiv=<HTMLInputElement>document.getElementById("interviewdate")
     const interviewTimeDiv=<HTMLInputElement>document.getElementById("interviewtime")
+    const interviewDateInput=<HTMLInputElement>document.getElementById('interviewDate');
+    const interviewTimeInput=<HTMLInputElement>document.getElementById('interviewTime');
+    const templateInput=<HTMLInputElement>document.getElementById('template');
+    const headingInput=<HTMLInputElement>document.getElementById('heading');
+    const contentInput=<HTMLInputElement>document.getElementById('body');
     if(status.value==='screened'){
         interviewDateDiv.classList.remove("hidden");
         interviewTimeDiv.classList.remove("hidden");
@@ -177,14 +182,9 @@ export const onChange= async()=>{
     const userList:any= await userListOfData(userConceptId);
     const UserFirstName=userList.the_Profile?.the_profile_first_name?.[0]?.data?.the_first_name || userList?.entity?.first_name;
 
-    const interviewDate:any=document.getElementById('interviewDate');
-    const time:any=document.getElementById('interviewTime');
-    const template:any=document.getElementById('template');
-    const content:any=document.getElementById('body');
-    const heading:any=document.getElementById('heading');
-    heading.value=`[Job Title] Opportunity at Mentors Friend`; 
-    if(template.value=='template1'){
-    content.value=`Hi ${UserFirstName},
+    if(templateInput.value=='template1'){
+    headingInput.value=`[Job Title] Opportunity at Mentors Friend`; 
+    contentInput.value=`Hi ${UserFirstName},
 
 Thank you for applying to the [Job Title] position at Mentors Friend. After reviewing your application, we’re excited to invite you to interview for the role! 
 
@@ -192,7 +192,7 @@ Your interview will be conducted [Format] and last roughly [Length of Interview]
 
 Please let us know if you are available during the following times:
 
-[Day, ${interviewDate.value} – Time, ${time.value}]
+[Day, ${interviewDateInput.value} – Time, ${interviewTimeInput.value}]
 
 
 Thanks again for your interest in joining the Mentors Friend team! We’re looking forward to speaking with you.
@@ -202,43 +202,47 @@ Best,
 [Your Name]
 [Your Email Signature]`;
     }
-    else if(template.value=='template2'){
-        content.value=`
-     <div class="container" style=" max-width: 600px;
+    else if(templateInput.value=='template2'){
+        headingInput.value=`[Job Title] Opportunity at Mentors Friend`; 
+        contentInput.value=`
+            <div class="container" style=" max-width: 600px;
             margin: 20px auto;
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-    <div class="header" style="text-align: center;
+            <div class="header" style="text-align: center;
             padding: 10px 0;">
-        <img style="max-width: 150px;" src="https://via.placeholder.com/150" alt="Company Logo">
-    </div>
-    <div class="content">
-        <h2 style="color: #333;">Interview Invitation</h2>
-        <p style="margin: 10px 0;">Dear ${UserFirstName},</p>
-        <p style="margin: 10px 0;">We are pleased to invite you to an interview for the position of [Position Name] at Mentors Friend. Below are the details of your interview:</p>
-        <div class="details" style="margin: 20px 0;
+            <img style="max-width: 150px;" src="https://via.placeholder.com/150" alt="Company Logo">
+            </div>
+            <div class="content">
+            <h2 style="color: #333;">Interview Invitation</h2>
+            <p style="margin: 10px 0;">Dear ${UserFirstName},</p>
+            <p style="margin: 10px 0;">We are pleased to invite you to an interview for the position of [Position Name] at Mentors Friend. Below are the details of your interview:</p>
+            <div class="details" style="margin: 20px 0;
             padding: 10px;
             background-color: #f9f9f9;
             border-left: 4px solid #007BFF;">
-            <p style="margin: 5px 0;"><strong>Date:</strong> ${interviewDate.value}</p>
-            <p style="margin: 5px 0;"><strong>Time:</strong> ${time.value}</p>
+            <p style="margin: 5px 0;"><strong>Date:</strong> ${interviewDateInput.value}</p>
+            <p style="margin: 5px 0;"><strong>Time:</strong> ${interviewTimeInput.value}</p>
             <p style="margin: 5px 0;"><strong>Location:</strong> <a href="https://g.co/kgs/wKeJjyt">click here</a></p>
             <p style="margin: 5px 0;"><strong>Interviewers:</strong> [Interviewers]</p>
-        </div>
-        <p style="margin: 10px 0;">Please ensure to bring a copy of your resume and arrive 10 minutes early. If you have any questions, feel free to contact us at [Contact Information].</p>
-        <p style="margin: 10px 0;">We look forward to meeting you.</p>
-        <p style="margin: 10px 0;">Sincerely,</p>
-        <p style="margin: 10px 0;">[Your Name]<br>[Your Position]<br>Mentors Friend</p>
-    </div>
-    <div class="footer" style=" text-align: center;
+            </div>
+            <p style="margin: 10px 0;">Please ensure to bring a copy of your resume and arrive 10 minutes early. If you have any questions, feel free to contact us at [Contact Information].</p>
+            <p style="margin: 10px 0;">We look forward to meeting you.</p>
+            <p style="margin: 10px 0;">Sincerely,</p>
+            <p style="margin: 10px 0;">[Your Name]<br>[Your Position]<br>Mentors Friend</p>
+            </div>
+            <div class="footer" style=" text-align: center;
             color: #777;
             font-size: 12px;
             margin-top: 20px;">
-        <p>&copy; [Year] Mentors Friend. All rights reserved.</p>
-    </div>
-</div>`
+            <p>&copy; [Year] Mentors Friend. All rights reserved.</p>
+            </div>
+            </div>`
+    }else{
+        headingInput.value='';
+        contentInput.value='';
     }
 }
 export const submitSetInterviewForm=async(e:any)=>{
@@ -260,6 +264,7 @@ export const submitSetInterviewForm=async(e:any)=>{
     // await DeleteConceptById(101225073);
     const getInterviewSchedule=await listOfOneInterviewSchedule(userConceptId)
     // return;
+    console.log(getInterviewSchedule,"getInterviewSchedule")
     if(getInterviewSchedule?.interviewScheduleid){
         await DeleteConceptById(getInterviewSchedule?.interviewScheduleid)
        }
@@ -300,7 +305,6 @@ export const submitSetInterviewForm=async(e:any)=>{
         location.reload();
       }, 100);
 }
-
 export default async function createSetInterviewModalHTML() {
     (window as any).closeModal = closeinterViewModal;
     (window as any).addEmail = addEmail;

@@ -15,3 +15,15 @@
     border:1px solid red;
     box-shadow: 0 0 10px #719ECE;
   }
+.ck p {
+  color: #000;
+  height: 200px;
+}
+.ck ul li {
+  color: #000;
+  height: 200px;
+}
+.ck ol li {
+  color: #000;
+  height: 200px;
+}

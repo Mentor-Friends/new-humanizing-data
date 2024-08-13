@@ -57,26 +57,6 @@ const html= `<div class="container mx-auto my-10 p-6 bg-white shadow-md">
     })||''}
     </div>
 </div>
-
-<div class="mt-8">
-    <h2 class="text-2xl font-semibold mb-4">Certifications</h2>
-    <div class="mb-6">
-        <p class="text-gray-700">Certified Scrum Master (CSM)</p>
-        <p class="text-gray-700">AWS Certified Solutions Architect</p>
-    </div>
-</div>
-
-<div class="mt-8">
-    <h2 class="text-2xl font-semibold mb-4">Projects</h2>
-    <div class="mb-6">
-        <h3 class="text-xl font-semibold">Project Management System</h3>
-        <p class="text-gray-700">A web-based application for managing projects, tasks, and teams, built using React and Node.js.</p>
-    </div>
-    <div class="mb-6">
-        <h3 class="text-xl font-semibold">E-commerce Platform</h3>
-        <p class="text-gray-700">Developed a full-featured e-commerce platform with a user-friendly interface, using AngularJS and MongoDB.</p>
-    </div>
-</div>
 </div>`
 // const container:any = document.createElement("div");
 divEle.innerHTML=html 
