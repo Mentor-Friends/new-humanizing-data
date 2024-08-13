@@ -15,7 +15,9 @@ export enum Permission {
   listing = "Listing",
   attendance = "Attendance",
   employee = "Employee",
+  leave = "Leave",
   role = "Role",
+  settings = "Settings",
 }
 
 export enum PermissionAction {
