@@ -1,5 +1,5 @@
 import mainViewClass from "../../default/mainView.class";
-import { sidebarHTML, sidebarMenu } from "../../services/sidebar.service";
+import { sidebarHTML, sidebarMenu } from "../../services/ui/sidebar.service";
 import { leaveSettings } from "./partials/leave-settings.index";
 
 export default class extends mainViewClass {

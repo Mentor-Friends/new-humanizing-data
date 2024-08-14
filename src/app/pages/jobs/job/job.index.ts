@@ -3,7 +3,13 @@ import createViewIndividualProfileModalHTML from "../../../modules/setInterview-
 import createSetInterviewModalHTML from "../../../modules/setInterview-modal/setInterview-modal";
 import topNavigation from "../../../modules/top-nav/top-navigation";
 import { closeModal, openModal } from "../../../services/modal.service";
-import { applyJob, getJobDetails, openIndividualProfileModal, openScheduleInterviewModal, submitUpdateSKUForm } from "./job.service";
+import {
+  applyJob,
+  getJobDetails,
+  openIndividualProfileModal,
+  openScheduleInterviewModal,
+  submitUpdateSKUForm,
+} from "./job.service";
 
 export default class extends mainViewClass {
   constructor(params: any) {
@@ -16,13 +22,12 @@ export default class extends mainViewClass {
     (window as any).closeModal = closeModal;
     (window as any).submitUpdateSKUForm = submitUpdateSKUForm;
     (window as any).applyJob = applyJob;
-    (window as any).openScheduleInterviewModal=openScheduleInterviewModal;
-    (window as any).openIndividualProfileModal=openIndividualProfileModal;
+    (window as any).openScheduleInterviewModal = openScheduleInterviewModal;
+    (window as any).openIndividualProfileModal = openIndividualProfileModal;
 
-    
     const jobDetails = await getJobDetails(this.params?.id);
-    const scheduleModal= await createSetInterviewModalHTML();
-    const IndividualProfileModal= await createViewIndividualProfileModalHTML()
+    const scheduleModal = await createSetInterviewModalHTML();
+    const IndividualProfileModal = await createViewIndividualProfileModalHTML();
     return `
       ${topNavigation}
       ${scheduleModal}

@@ -1,11 +1,13 @@
 import mainViewClass from "../../../default/mainView.class";
 import applyLeaveModalHTML from "../../../modules/leave/apply-leave/apply-leave.index";
+import { toggleDropdownMenuOption } from "../../../services/ui/dropdown.service";
 import { getLocalStorageData } from "../../../services/helper.service";
 import { closeModal, openModal } from "../../../services/modal.service";
-import { sidebarHTML, sidebarMenu } from "../../../services/sidebar.service";
+import { sidebarHTML, sidebarMenu } from "../../../services/ui/sidebar.service";
 import { hasRole } from "../../roles/role.helper";
 import { fetchLeaveRequest, leaveStatus } from "../leave.helper";
 import {
+  changeLeaveRequestStatus,
   handleLeaveFilterChange,
   populateLeaveRequests,
   populateUserDropdown,
@@ -15,7 +17,9 @@ export default class extends mainViewClass {
   async getHtml(): Promise<string> {
     (window as any).openModal = openModal;
     (window as any).closeModal = closeModal;
+    (window as any).toggleDropdownMenuOption = toggleDropdownMenuOption;
     (window as any).handleLeaveFilterChange = handleLeaveFilterChange;
+    (window as any).changeLeaveRequestStatus = changeLeaveRequestStatus;
 
     const isEmployee = await hasRole("ROLE_EMPLOYEE");
     const isEmployerOrAdmin =

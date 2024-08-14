@@ -1,9 +1,7 @@
 import { GetCompositionWithId } from "mftsccs-browser";
 import mainViewClass from "../../../default/mainView.class";
 import { updateContent } from "../../../routes/renderRoute.service";
-import {
-  formatUserComposition,
-} from "../../../services/helper.service";
+import { formatUserComposition } from "../../../services/helper.service";
 import {
   generateMonthOptions,
   generateYearOptions,
@@ -18,8 +16,8 @@ import {
   showEditAttendanceModal,
 } from "./indivisual-attendance.service";
 import { exportEmployeesAteendanceModalHTML } from "../../../modules/attendance/export-attendance/export-attendance.index";
-import { sidebarHTML, sidebarMenu } from "../../../services/sidebar.service";
-import { showDropdownMenuOption } from "../../../services/dropdown.service";
+import { sidebarHTML, sidebarMenu } from "../../../services/ui/sidebar.service";
+import { toggleDropdownMenuOption } from "../../../services/ui/dropdown.service";
 
 export default class extends mainViewClass {
   userConcept!: number;
@@ -34,7 +32,7 @@ export default class extends mainViewClass {
   }
 
   async getHtml(): Promise<string> {
-    (window as any).showDropdownMenuOption = showDropdownMenuOption;
+    (window as any).toggleDropdownMenuOption = toggleDropdownMenuOption;
     (window as any).handleMonthlyDateChange = handleMonthlyDateChange;
     (window as any).showEditAttendanceModal = showEditAttendanceModal;
     (window as any).markAsAbsent = markAsAbsent;
