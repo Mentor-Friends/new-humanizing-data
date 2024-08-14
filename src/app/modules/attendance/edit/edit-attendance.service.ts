@@ -21,6 +21,19 @@ export async function submitUpdateAttendance(
 
   const formValues = Object.fromEntries(data.entries());
   console.log("formValues", formValues, formValues?.["checkin_101202150"]);
+  let updatedAttendance = false;
+
+  // validate if remarks is empty
+  for (const key in formValues) {
+    if (Object.prototype.hasOwnProperty.call(formValues, key)) {
+      if (
+        key == "remarks" &&
+        !formValues[key] &&
+        formValues[key].toString().trim() == ""
+      )
+        return;
+    }
+  }
 
   for (let i = 0; i < attendanceList.length; i++) {
     const attendance = attendanceList[i];
@@ -47,10 +60,11 @@ export async function submitUpdateAttendance(
               checkoutConcept,
               "checkin"
             );
+            updatedAttendance = true;
           } else if (
-            attendance.checkout && 
-            new Date(attendance.checkout).toISOString().slice(0, 16) !=
-            new Date(value.toString()).toISOString()
+            attendance.checkin &&
+            new Date(attendance.checkin).toISOString().slice(0, 16) !=
+              new Date(value.toString()).toISOString()
           ) {
             // update attendance
             // new Date(new Date(value.toString()).toISOString().slice(0, 16)+ attendance.checkin.slice(16, 24)).toISOString()
@@ -62,6 +76,7 @@ export async function submitUpdateAttendance(
               "checkin",
               new Date(value.toString()).toISOString()
             );
+            updatedAttendance = true;
           }
         } else if (
           splitedText[0] == "checkout" &&
@@ -81,6 +96,7 @@ export async function submitUpdateAttendance(
               checkoutConcept,
               "checkout"
             );
+            updatedAttendance = true;
           } else if (
             new Date(attendance.checkout)?.toISOString()?.slice(0, 16) !=
             new Date(value.toString()).toISOString()
@@ -93,6 +109,7 @@ export async function submitUpdateAttendance(
               "checkout",
               new Date(value.toString()).toISOString()
             );
+            updatedAttendance = true;
           }
         } else if (splitedText[0] == "remarks") {
           const attendanceWithRemarks = attendanceList.find(
@@ -111,6 +128,7 @@ export async function submitUpdateAttendance(
               checkoutConcept,
               "remarks"
             );
+            updatedAttendance = true;
           } else if (attendanceWithRemarks.remarks != value) {
             await updateTypeConceptLocal(
               userId,
@@ -120,11 +138,27 @@ export async function submitUpdateAttendance(
               "remarks",
               value.toString()
             );
+            updatedAttendance = true;
           }
+          if (updatedAttendance == true) {
+            await updateTypeConceptLocal(
+              userId,
+              token,
+              attendanceConcept,
+              "edited",
+              "edited",
+              "true"
+            );
+          }
+          const profileStorageData: any = await getLocalStorageData();
+          const userConceptId = profileStorageData?.userConcept;
+          CreateConnectionBetweenEntityLocal(attendanceConcept, await GetTheConceptLocal(userConceptId), 'edited_by')
         }
       }
     }
   }
-  await LocalSyncData.SyncDataOnline();
-  setTimeout(() => location.reload(), 500)
+  if (updatedAttendance) {
+    await LocalSyncData.SyncDataOnline();
+  }
+  setTimeout(() => location.reload(), 500);
 }
