@@ -45,7 +45,7 @@ export async function showEditAttendanceModal(
         <div class="my-4">
             <label 
                 for="checkin_${attendance.id}" 
-                class="block text-sm font-medium leading-6 text-gray-900">
+                class="block text-sm font-medium leading-6">
                 Check In
                 <span class="text-rose-400">*</span>
             </label>
@@ -65,7 +65,7 @@ export async function showEditAttendanceModal(
         <div class="my-4">
             <label 
                 for="checkout_${attendance.id}" 
-                class="block text-sm font-medium leading-6 text-gray-900">
+                class="block text-sm font-medium leading-6">
                 Check Out
                 <span class="text-rose-400">*</span>
             </label>
@@ -90,7 +90,7 @@ export async function showEditAttendanceModal(
 
   form += `
         <div class="my-4">
-            <label for="remarks" class="block text-sm font-medium leading-6 text-gray-900">Remarks<span
+            <label for="remarks" class="block text-sm font-medium leading-6">Remarks<span
                 class="text-rose-400">*</span></label>
             <div class="mt-2">
                 <textarea name="remarks" id="remarks" required
