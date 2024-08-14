@@ -31,14 +31,16 @@ export const updateTypeConceptLocal = async (
   const toConcept = relatedLinks?.[0]?.id;
 
   // remove previous link
-  const item = {
-    parent: fromConcept.id,
-    fullLinker: `${fromConcept?.type?.characterValue}_${linker}`,
-    id: toConcept,
-  };
-  const responseConnection: any = await getConnectionList(item, token);
-  const responseId = responseConnection?.[0]?.id;
-  await DeleteConnectionById(responseId);
+  if (toConcept) {
+    const item = {
+      parent: fromConcept.id,
+      fullLinker: `${fromConcept?.type?.characterValue}_${linker}`,
+      id: toConcept,
+    };
+    const responseConnection: any = await getConnectionList(item, token);
+    const responseId = responseConnection?.[0]?.id;
+    await DeleteConnectionById(responseId);
+  }
 
   // create new link
   const keyConcept: LConcept = await MakeTheInstanceConceptLocal(

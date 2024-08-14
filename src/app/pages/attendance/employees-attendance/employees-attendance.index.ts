@@ -25,7 +25,7 @@ export default class extends mainViewClass {
       ${await sidebarHTML()}
       <div class="flex flex-row justify-end px-4 py-2 shadow w-full">${sidebarMenu()}</div>
 
-      <div class="container mx-auto my-4 text-gray-800 dark:text-white">
+      <div class="container mx-auto my-4">
           <div class="flex flex-row justify-between items-center">
             <div>
               <h3 class="text-3xl font-bold">Today's Attendance</h3>

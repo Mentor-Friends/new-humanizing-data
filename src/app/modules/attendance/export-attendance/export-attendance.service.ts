@@ -1,4 +1,5 @@
 import { exportAttendance } from "../../../pages/attendance/attendance.helper";
+import { closeModal } from "../../../services/modal.service";
 
 export function exportUserAttendance(e: any) {
   e.preventDefault();
@@ -21,4 +22,5 @@ export function exportUserAttendance(e: any) {
   } else {
     exportAttendance(date, type);
   }
+  closeModal('export-employees-ateendance')
 }

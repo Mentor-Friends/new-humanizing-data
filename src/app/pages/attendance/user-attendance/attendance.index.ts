@@ -56,7 +56,7 @@ export default class extends mainViewClass {
     return `
         ${topNavigation}
 
-        <div class="container mx-auto my-4 text-gray-800">
+        <div class="container mx-auto my-4">
           ${await dailyAttendanceHTML()}
 
           <div class="w-full px-6 py-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">

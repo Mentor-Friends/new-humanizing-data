@@ -9,16 +9,19 @@ import noPageFoundIndex from "../pages/noPageFound/noPageFound.index.ts";
 import addItemIndex from "../pages/addItem/addItem.index.ts";
 import listingItemsIndex from "../pages/listingItems/listingItems.index.ts";
 import rfqIndex from "../pages/rfq/rfq.index.ts";
-import roleClass from "../pages/roles/roles.index.ts";
-import attendanceClass from "../pages/attendance/user-attendance/attendance.index.ts";
-import employeeHiredClass from "../pages/hired-employee/hired-employee.index.ts";
-import employeeAttendanceClass from "../pages/attendance/employees-attendance/employees-attendance.index.ts";
-import indivisualAttendanceClass from "../pages/attendance/indivisual-attendance/indivisual-attendance.index.ts";
+import roleIndex from "../pages/roles/roles.index.ts";
+import attendanceIndex from "../pages/attendance/user-attendance/attendance.index.ts";
+import employeeHiredIndex from "../pages/hired-employee/hired-employee.index.ts";
+import employeeAttendanceIndex from "../pages/attendance/employees-attendance/employees-attendance.index.ts";
+import indivisualAttendanceIndex from "../pages/attendance/indivisual-attendance/indivisual-attendance.index.ts";
+import leaveIndex from "../pages/leave/leave.index.ts";
+import leaveRequestsIndex from "../pages/leave/leave-requests/leave-requests.index.ts";
 import jobListIndex from "../pages/jobs/jobList/jobList.index.ts";
 import jobIndex from "../pages/jobs/job/job.index.ts";
 import appliedJobsIndex from "../pages/jobs/appliedJobs/appliedJobs.index.ts";
 import postedJobsIndex from "../pages/jobs/postedJobs/postedJobs.index.ts";
 import calendarIndex from "../pages/calendar/calendar.index.ts";
+import settingsIndex from "../pages/settings/settings.index.ts";
 
 type RouteParams = {
   path: any;
@@ -97,28 +100,28 @@ const routes: RouteParams[] = [
   },
   {
     path: "/roles",
-    content: roleClass,
+    content: roleIndex,
     isAuthenticated: true,
   },
   // attendance
   {
     path: "/attendance",
-    content: attendanceClass,
+    content: attendanceIndex,
     isAuthenticated: true,
   },
   {
     path: "/employee/hired",
-    content: employeeHiredClass,
+    content: employeeHiredIndex,
     isAuthenticated: true,
   },
   {
     path: "/employee/attendance",
-    content: employeeAttendanceClass,
+    content: employeeAttendanceIndex,
     isAuthenticated: true,
   },
   {
     path: "/employee/attendance/:userConcept",
-    content: indivisualAttendanceClass,
+    content: indivisualAttendanceIndex,
     isAuthenticated: true,
   },
   {
@@ -144,6 +147,21 @@ const routes: RouteParams[] = [
   {
     path: "/calendar",
     content: calendarIndex,
+    isAuthenticated: true,
+  },
+  {
+    path: "/leave",
+    content: leaveIndex,
+    isAuthenticated: true,
+  },
+  {
+    path: "/leave-requests",
+    content: leaveRequestsIndex,
+    isAuthenticated: true,
+  },
+  {
+    path: "/settings",
+    content: settingsIndex,
     isAuthenticated: true,
   },
 ];

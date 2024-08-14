@@ -28,7 +28,7 @@ export function exportEmployeesAteendanceModalHTML() {
                     <form method="post" onsubmit="exportUserAttendance(event)" name="exportEmployeesAttendanceForm" id="exportEmployeesAttendanceForm">
 
                         <div class="my-4">
-                            <label for="export-year" class="block text-sm font-medium leading-6 text-gray-900">Year<span
+                            <label for="export-year" class="block text-sm font-medium leading-6">Year<span
                                 class="text-rose-400">*</span></label>
                             <div class="mt-2">
                                 <select 
@@ -40,7 +40,7 @@ export function exportEmployeesAteendanceModalHTML() {
                             </div>
                         </div>
                         <div class="my-4">
-                            <label for="export-month" class="block text-sm font-medium leading-6 text-gray-900">Month<span
+                            <label for="export-month" class="block text-sm font-medium leading-6">Month<span
                                 class="text-rose-400">*</span></label>
                             <div class="mt-2">
                                 <select 
@@ -52,7 +52,7 @@ export function exportEmployeesAteendanceModalHTML() {
                             </div>
                         </div>
                         <div class="my-4">
-                            <label for="export-format" class="block text-sm font-medium leading-6 text-gray-900">Export Format<span
+                            <label for="export-format" class="block text-sm font-medium leading-6">Export Format<span
                                 class="text-rose-400">*</span></label>
                             <div class="mt-2">
                                 <select 
