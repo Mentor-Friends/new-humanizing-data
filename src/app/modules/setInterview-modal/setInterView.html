@@ -1,0 +1,216 @@
+<div class="container mx-auto my-10 p-6 bg-white shadow-md">
+    <div class="flex items-center">
+        <img id="profileImg" class="w-32 h-32 rounded-full mr-6" src="${the_profile?.the_profile_profilePic?.[0]?.data?.the_profilePic||'https://via.placeholder.com/150'}" alt="Employee Photo">
+        <div>
+            <h1 id="fName" class="text-3xl font-bold">${the_profile?.the_profile_first_name?.[0]?.data?.the_first_name||''} ${the_profile?.the_profile_last_name?.[0]?.data?.the_last_name||''}</h1>
+            <p class="text-gray-700">Software Engineer</p>
+            <p class="text-gray-700">${the_profile?.the_profile_email?.[0]?.data?.the_email||''}</p>
+             <p class="text-gray-700">${the_profile?.the_profile_phone?.[0]?.data?.the_phone||''}</p>
+        </div>
+    </div>
+    
+    <div class="mt-8">
+        <h2 class="text-2xl font-semibold mb-4 ${the_profile?.the_profile_aboutYou?.[0]?.data?.the_aboutYou?'':'hidden'}">Profile</h2>
+        <p class="text-gray-700">${the_profile?.the_profile_aboutYou?.[0]?.data?.the_aboutYou||''}</p>
+    </div>
+    
+    <div class="mt-8">
+        <h2 class="text-2xl font-semibold mb-4 ${the_profile?.the_profile_s_experience?.[0]?.data?.the_experience?'':'hidden'}">Experience</h2>
+        ${the_profile?.the_profile_s_experience?.map((output:any)=>{
+            return`<div class="mb-6">
+            <h3 class="text-xl font-semibold">${output?.data?.the_experience?.the_experience_position?.[0]?.data?.the_position || ''}</h3>
+            <p class="text-gray-700">${output?.data?.the_experience?.the_experience_company?.[0]?.data?.the_company || ''}, ${output?.data?.the_experience?.the_experience_expdobFrom?.[0]?.data?.the_expdobFrom || ''}- ${output?.data?.the_experience?.the_experience_expdobTo?.[0]?.data?.the_expdobTo || ''}</p>
+            <ul class="list-disc list-inside text-gray-700">
+                <li>Developed and maintained web applications using React and Node.js.</li>
+                <li>Led a team of 5 developers in agile project management.</li>
+                <li>Optimized application performance, reducing load times by 30%.</li>
+            </ul>
+        </div>`
+        })||''}
+    </div>
+    
+    <div class="mt-8">
+        <h2 class="text-2xl font-semibold mb-4 ${the_profile?.the_profile_s_education?.[0]?.data?.the_education?'':'hidden'}">Education</h2>
+         ${the_profile?.the_profile_s_education?.map((output:any)=>{
+        return `<div class="mb-6">
+            <h3 class="text-xl font-semibold">${output?.data?.the_education?.the_education_eduLevel?.[0]?.data?.the_eduLevel.toUpperCase() || ''} of ${output?.data?.the_education?.the_education_course?.[0]?.data?.the_course || ''} </h3>
+    
+            <p class="text-gray-700">${output?.data?.the_education?.the_education_institutionName?.[0]?.data?.the_institutionName || ''} , ${output?.data?.the_education?.the_education_dobFrom?.[0]?.data?.the_dobFrom || ''} - ${output?.data?.the_education?.the_education_dobTo?.[0]?.data?.the_dobTo || ''}</p>
+            <p class="text-gray-700">${output?.data?.the_education?.the_education_institutionAddress?.[0]?.data?.the_institutionAddress || ''}</p>   
+    </div>`
+    })||''}
+    </div>
+    
+    <div class="mt-8">
+        <h2 class="text-2xl font-semibold mb-4 ${the_profile?.the_profile_s_skills?.[0]?.data?.the_skills?'':'hidden'}">Skills</h2>
+       <div class="flex flex-wrap">
+        ${the_profile?.the_profile_s_skills?.map((output:any)=>{
+             return`<span class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">${output?.data?.the_skills?.the_skills_language?.[0]?.data?.the_language || ''} - ${output?.data?.the_skills?.the_skills_yearOfExperience?.[0]?.data?.the_yearOfExperience || ''}years</span>`
+        })||''}
+        </div>
+    </div>
+    
+    <div class="mt-8">
+        <h2 class="text-2xl font-semibold mb-4">Certifications</h2>
+        <div class="mb-6">
+            <p class="text-gray-700">Certified Scrum Master (CSM)</p>
+            <p class="text-gray-700">AWS Certified Solutions Architect</p>
+        </div>
+    </div>
+    
+    <div class="mt-8">
+        <h2 class="text-2xl font-semibold mb-4">Projects</h2>
+        <div class="mb-6">
+            <h3 class="text-xl font-semibold">Project Management System</h3>
+            <p class="text-gray-700">A web-based application for managing projects, tasks, and teams, built using React and Node.js.</p>
+        </div>
+        <div class="mb-6">
+            <h3 class="text-xl font-semibold">E-commerce Platform</h3>
+            <p class="text-gray-700">Developed a full-featured e-commerce platform with a user-friendly interface, using AngularJS and MongoDB.</p>
+        </div>
+    </div>
+    </div>
+
+
+<div id="create-profile-modal"
+    class="fixed hidden z-50 inset-0 bg-white-900 bg-opacity-60 dark:bg-white-200 dark:bg-opacity-40 overflow-y-auto h-full w-full px-4">
+    <div
+        class="relative top-20 mx-auto shadow-xl rounded-md bg-white max-w-3xl text-zinc-900 bg-zinc-50 dark:text-white dark:bg-white-900">
+        <div class="flex justify-between px-4 pt-4">
+            <h3 class="text-xl font-normal text-zinc-900 dark:text-black my-0">
+                Set Interview
+            </h3>
+            <button onclick="closeModal('create-setInterview-modal')" type="button"
+                class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                        clip-rule="evenodd"></path>
+                </svg>
+            </button>
+        </div>
+        <!--  -->
+
+        <form method="post" onsubmit="submitAddProfileForm(event)" class="mt-10">
+            <div class="grid gap-6 mb-6 mt-6 md:grid-cols-3">
+                <div class="form-control">
+                    <label for="status"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Staus</label>
+                    <select id="status" name="status" autocomplete="status-name"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="">
+                        <option value="Screened">Unscreened</option>
+                        <option value="screened">Screened</option>
+                        <option value="shortlisted">Shortlisted</option>
+                        <option value="interviwed">Interviwed</option>
+                        <option value="selected">Selected</option>
+                        <option value="flag">Flag</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                </div>
+                <div class="form-control">
+                    <label for="interviewDate"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">InterView Date</label>
+                    <input type="text" id="interviewDate" name="interviewDate"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="" />
+                    <small></small>
+                </div>
+                <div class="form-control">
+                    <label for="interviewTime"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Staus</label>
+                    <select id="interviewTime" name="interviewTime" autocomplete="interviewTime-name"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="">
+                        <option value="9am">9AM</option>
+                        <option value="10am">10AM</option>
+                        <option value="11am">11AM</option>
+                        <option value="12pm">12PM</option>
+                        <option value="1pm">1PM</option>
+                        <option value="2pm">2PM</option>
+                        <option value="3pm">3PM</option>
+                        <option value="4pm">4PM</option>
+                        <option value="5pm">5PM</option>
+                        <option value="6pm">6PM</option>
+                    </select>
+                </div>
+
+                <div class="form-control">
+                    <label for="personality"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Personality</label>
+                    <select id="personality" name="personality" autocomplete="personality-name"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="">
+                        <option value="Bad">Bad</option>
+                        <option value="Not Bad">Not Bad</option>
+                        <option value="Good">Good</option>
+                        <option value="Very Good">Very Good</option>
+                        <option value="Excellent">Excellent</option>
+                    </select>
+                </div>
+                <div class="form-control">
+                    <label for="skillKnowledge"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Skill Knowledge</label>
+                    <select id="skillKnowledge" name="skillKnowledge" autocomplete="skillKnowledge-name"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="">
+                        <option value="Bad">Bad</option>
+                        <option value="Not Bad">Not Bad</option>
+                        <option value="Good">Good</option>
+                        <option value="Very Good">Very Good</option>
+                        <option value="Excellent">Excellent</option>
+                    </select>
+                </div>
+                <div class="form-control">
+                    <label for="characterFlow"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Character Flow</label>
+                    <select id="characterFlow" name="characterFlow" autocomplete="characterFlow-name"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="">
+                        <option value="Bad">Bad</option>
+                        <option value="Not Bad">Not Bad</option>
+                        <option value="Good">Good</option>
+                        <option value="Very Good">Very Good</option>
+                        <option value="Excellent">Excellent</option>
+                    </select>
+                </div>
+            </div>
+             
+            <div class="grid gap-6 mb-6 mt-6 md:grid-cols-12">
+                <div class="form-control">
+                    <label for="heading"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Heading</label>
+                    <input type="text" id="heading" name="heading"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="" />
+                <small></small>
+                </div>
+            </div>
+
+            <div class="grid gap-6 mb-6 mt-6 md:grid-cols-12">
+                <div class="form-control">
+                    <label for="heading" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Body</label>
+                        <textarea 
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        id="heading" name="heading">
+                         </textarea>
+                    <small></small>
+                </div>
+            </div>
+
+            <div class="grid gap-6 mb-6 mt-6 md:grid-cols-12">
+                <div class="form-control">
+                    <label for="heading"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                    <input type="text" id="heading" name="heading"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="" />
+                <small></small>
+                </div>
+                <button id="add-button" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Add More</button>
+            </div>
+        </form>
+
+        <!--  -->
+    </div>
+</div>

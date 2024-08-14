@@ -1,10 +1,28 @@
 import initNavigation from "./home-navigation.service";
+import { checkLogIn } from "./home-navigation.service";
 
-export default `
-  <nav class="relative px-4 py-4 flex justify-between items-center bg-white">
-    <a class="text-3xl font-bold leading-none" href="#">
+export default async function loadHomeNavHTML() {
+  const loginStatus = await checkLogIn();
+  let homeButtonHTML: string;
+  if (loginStatus) {
+    homeButtonHTML = `
+      <router-link href="/dashboard"
+        class="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-green-800 hover:bg-green-700 rounded-xl cursor-pointer">Dashboard</router-link>
+    `;
+  } else {
+    homeButtonHTML = `
+      <router-link href="/login"
+        class="block px-4 py-3 mb-2 mr-2 leading-loose text-xs text-center text-white font-semibold bg-green-600 hover:bg-green-700 rounded-xl cursor-pointer">Login</router-link>
+      <router-link href="/signup"
+        class="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-green-600 hover:bg-green-700 rounded-xl cursor-pointer">Signup</router-link>
+    `;
+  }
+
+  return `
+  <nav class="relative px-4 py-4 flex justify-between items-center bg-white shadow-md z-10">
+    <router-link href="/" class="cursor-pointer hover:opacity-85">
       <img src="./images/humanizing-data.png" alt="humanizing data logo" class="w-16 md:w-32 lg:w-48">
-    </a>
+    </router-link>
     <div class="lg:hidden">
       <button class="navbar-burger flex items-center text-blue-600 p-3">
         <svg class="block h-4 w-4 fill-current" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -15,28 +33,22 @@ export default `
     </div>
     <div class="flex justify-end">
       <ul class="hidden lg:flex lg:mx-auto lg:flex lg:items-center lg:mr-8 justify-end lg:w-auto lg:space-x-6">
-        <!-- <li><a class="text-sm text-gray-400 hover:text-gray-500" href="#">Home</a></li>
-            <li><a class="text-sm text-green-600 font-bold" href="#">About</a></li>
-            <li><a class="text-sm text-gray-400 hover:text-gray-500" href="#">Services</a></li>
-            <li><a class="text-sm text-gray-400 hover:text-gray-500" href="#">Blog</a></li>
-            <li><a class="text-sm text-gray-400 hover:text-gray-500" href="#">Contact</a></li>
-            <li><a class="text-sm text-gray-400 hover:text-gray-500" href="#">Career</a></li> -->
-
+        <img src="./images/dark/moon.svg" alt="Moon SVG" class="h-8 w-8 hidden dark:block moon cursor-pointer">
+        <img src="./images/light/sun.svg" alt="Sun SVG" class="h-8 w-8 dark:hidden block sun cursor-pointer">
         <router-link href="/" class="cursor-pointer text-sm text-green-600 font-bold">Home</router-link>
         <router-link href="/" class="cursor-pointer text-sm text-gray-400 hover:text-gray-500">About</router-link>
         <router-link href="/" class="cursor-pointer text-sm text-gray-400 hover:text-gray-500">Services</router-link>
         <router-link href="/" class="cursor-pointer text-sm text-gray-400 hover:text-gray-500">Blog</router-link>
         <router-link href="/" class="cursor-pointer text-sm text-gray-400 hover:text-gray-500">Contact</router-link>
-        <router-link href="/dashboard"
-          class="cursor-pointer text-sm text-gray-400 hover:text-gray-500">Career</router-link>
+        <router-link href="/" class="cursor-pointer text-sm text-gray-400 hover:text-gray-500">Career</router-link>
       </ul>
-      <!-- <a class="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-green-50 hover:bg-green-100 hover:text-green-900 text-sm text-green-900 font-bold rounded-xl transition duration-200" href="#">Sign In</a>
-          <a class="hidden lg:inline-block py-2 px-6 bg-green-500 hover:bg-green-600 hover:text-white text-sm text-white font-bold rounded-xl transition duration-200" href="#">Sign up</a> -->
 
-      <router-link href="/login"
+      <!-- <router-link href="/login"
         class="block px-4 py-3 mb-2 mr-2 leading-loose text-xs text-center text-white font-semibold bg-green-600 hover:bg-green-700 rounded-xl cursor-pointer">Login</router-link>
       <router-link href="/signup"
-        class="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-green-600 hover:bg-green-700 rounded-xl cursor-pointer">Signup</router-link>
+        class="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-green-600 hover:bg-green-700 rounded-xl cursor-pointer">Signup</router-link> -->
+
+      ${homeButtonHTML}      
 
     </div>
   </nav>
@@ -84,14 +96,15 @@ export default `
       </div>
       <div class="mt-auto">
         <div class="pt-6">
-          <router-link href="/login"
+          <!-- <router-link href="/login"
             class="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold leading-none bg-green-50 hover:bg-green-100 rounded-xl">Login</router-link>
           <router-link href="/signup"
-            class="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-green-600 hover:bg-green-700 rounded-xl">Signup</router-link>
+            class="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-green-600 hover:bg-green-700 rounded-xl">Signup</router-link> -->
         </div>
       </div>
     </nav>
   </div>
 `;
+}
 
 initNavigation();

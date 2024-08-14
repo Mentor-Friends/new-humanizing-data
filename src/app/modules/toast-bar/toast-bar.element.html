@@ -1,0 +1,37 @@
+<!-- <toast-bar position="top-right" type="info">
+  <p>Toast details</p>
+</toast-bar>
+
+ <template id="toast-template">
+  <style>
+    :host {
+      border: 1px solid #ccc;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      display: inline-block;
+    }
+
+    h3 {
+      color: blue;
+    }
+  </style>
+  <h3>This is toast</h3>
+  <slot></slot>
+</template>
+
+<script>
+  class ToastBar extends HTMLElement {
+    constructor() {
+      super()
+
+      const shadow = this.attachShadow({ mode: 'open' })
+      const toastTemplate = document.getElementById('toast-template')
+      const clone = toastTemplate.content.cloneNode(true)
+      shadow.appendChild(clone)
+
+      const heading = shadow.querySelector('h3')
+      heading.innerHTML = 'test heading text'
+    }
+  }
+  customElements.define('toast-bar', ToastBar)
+</script> -->
