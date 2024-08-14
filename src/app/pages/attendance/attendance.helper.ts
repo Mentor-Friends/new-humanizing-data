@@ -81,6 +81,18 @@ export function getDateInMonth(year: number, month: number) {
 }
 
 /**
+ * Method to inverse table rows
+ * @param tbodyId string
+ */
+export function inverseTableRows(tbodyId: string) {
+    const tbody = document.getElementById(tbodyId) as HTMLTableSectionElement;
+    if (tbody) {
+      const rows = Array.from(tbody.rows);
+      rows.reverse().forEach(row => tbody.appendChild(row));
+    }
+}
+
+/**
  * Method to search the user attendance
  * @param compositionId string
  * @param searchDate string
@@ -218,7 +230,7 @@ export async function getUserMonthlyAttendanceRows(
 
   let attendanceRows = "";
 
-  dateList.forEach((date: string) => {
+  dateList.reverse().forEach((date: string) => {
     const obj = calculateAttendance(monthlyAttendance, date);
 
     attendanceRows +=
