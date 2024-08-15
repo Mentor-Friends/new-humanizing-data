@@ -175,6 +175,10 @@ const menus = async () => {
         {
           url: "/employee/hired",
           name: "Employee Hired",
+          permission: await hasPermission(
+            Permission.attendance,
+            PermissionAction.delete
+          ),
         },
         {
           url: "/employee/attendance",
