@@ -30,7 +30,7 @@ export default class extends mainViewClass {
     }, 100);
 
     return `
-      ${topNavigation}
+      ${await topNavigation()}
       <section class="py-8 bg-white md:py-16 dark:bg-gray-900 antialiased">
         <div class="max-w-screen-xl px-4 mx-auto 2xl:px-0">
           ${productDetails}

@@ -1,12 +1,12 @@
 import topNavigation from "../../modules/top-nav/top-navigation";
 import { initiateListing, getProducts } from "./listing.service";
 
-const prouductList = await getProducts()
+const prouductList = await getProducts();
 
-async function onLoad () {
-  await initiateListing()
+async function onLoad() {
+  await initiateListing();
   return `
-    ${topNavigation}
+    ${await topNavigation()}
     <section class="py-8">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <h2 class="font-manrope font-bold text-4xl text-black mb-8 max-lg:text-center">
@@ -17,7 +17,7 @@ async function onLoad () {
       </div>
     </div>
   </section>
-  `
+  `;
 }
 
-export const listingHTML: any = await onLoad()
+export const listingHTML: any = await onLoad();
