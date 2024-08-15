@@ -31,11 +31,15 @@ export async function submitSignupForm(e: any) {
   );
   const confirmPasswordValue = inputConfirmPassword?.value;
   // console.log(confirmPasswordValue,"confirmPasswordValue");
-  const inputprivacyPolicy = <HTMLInputElement>document.getElementById("privacyPolicy");
+  const inputprivacyPolicy = <HTMLInputElement>(
+    document.getElementById("privacyPolicy")
+  );
   const privacyPolicy = inputprivacyPolicy?.checked;
-  const inputPrivacyPolicyError = <HTMLInputElement>document.getElementById("privacyPolicyError");
-  if(!privacyPolicy){
-    inputPrivacyPolicyError.style.display="block";
+  const inputPrivacyPolicyError = <HTMLInputElement>(
+    document.getElementById("privacyPolicyError")
+  );
+  if (!privacyPolicy) {
+    inputPrivacyPolicyError.style.display = "block";
   }
 
   const signupData: any = {
@@ -48,12 +52,12 @@ export async function submitSignupForm(e: any) {
     fname: firstNameValue,
     lname: lastNameValue,
   };
-if(privacyPolicy){
-  const signupResponse = await signup(signupData);
-  if (!signupResponse?.error && signupResponse?.data) {
-    updateContent("/login");
+  if (privacyPolicy) {
+    const signupResponse = await signup(signupData);
+    if (!signupResponse?.error && signupResponse?.data) {
+      updateContent("/login");
+    }
   }
-}
 }
 
 export async function signup(signupData: any) {
