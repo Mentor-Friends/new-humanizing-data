@@ -56,7 +56,7 @@ export default class extends mainViewClass {
     }, 500);
 
     return `
-        ${topNavigation}
+        ${await topNavigation()}
 
         <div class="container mx-auto my-4">
           ${await dailyAttendanceHTML()}

@@ -129,7 +129,7 @@ export default class extends mainViewClass {
     }, 500);
 
     return `
-      ${topNavigation}
+      ${await topNavigation()}
       <div class="w-4/5 mx-auto my-8 text-zinc-900 dark:text-white">
 
         <h1>Add Item</h1>

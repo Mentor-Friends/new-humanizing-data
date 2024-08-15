@@ -1,13 +1,20 @@
-import mainViewClass from '../../default/mainView.class.ts';
-import topNavigation from "../../modules/top-nav/top-navigation"
-import './profile.style.css';
-import { addEducation,addExperience,previewImage, getProfileData, addDoc,addSkills,openProfileModal } from "./profile.service"
-import createProfileModalHTML from '../../modules/profile-modal/create-profile-modal.ts';
-import { initTopNavigation } from '../../modules/top-nav/top-navigation.service.ts';
-import { submitAddProfileForm} from "./profile.service"
+import mainViewClass from "../../default/mainView.class.ts";
+import topNavigation from "../../modules/top-nav/top-navigation";
+import "./profile.style.css";
+import {
+  addEducation,
+  addExperience,
+  previewImage,
+  getProfileData,
+  addDoc,
+  addSkills,
+  openProfileModal,
+} from "./profile.service";
+import createProfileModalHTML from "../../modules/profile-modal/create-profile-modal.ts";
+import { initTopNavigation } from "../../modules/top-nav/top-navigation.service.ts";
+import { submitAddProfileForm } from "./profile.service";
 // import { ClassicEditor, Essentials, Bold, Italic, Font, Paragraph, Link, List } from 'ckeditor5';
 // import 'ckeditor5/ckeditor5.css';
-
 
 //CK Editor
 // const editorConfig:any={
@@ -18,7 +25,7 @@ import { submitAddProfileForm} from "./profile.service"
 //           'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor','link',
 //         ]
 //       },
-      
+
 //       heading: {
 //         options: [
 //           { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
@@ -34,12 +41,12 @@ import { submitAddProfileForm} from "./profile.service"
 //         options: [ 10, 12, 14, 'default', 18, 20, 22 ],
 //       supportAllValues: true
 //   },
-//   initialData: '<p id="initialData">This is the initial content with a custom text color.</p>',      
+//   initialData: '<p id="initialData">This is the initial content with a custom text color.</p>',
 // }
 export default class extends mainViewClass {
   constructor(params: any) {
     super(params);
-    this.setTitle('Listing Item');
+    this.setTitle("Listing Item");
   }
   async getHtml(): Promise<string> {
     // (window as any).popupAlert = popupAlert;
@@ -47,31 +54,31 @@ export default class extends mainViewClass {
     // (window as any).updateProfile = updateProfile;
     (window as any).submitAddProfileForm = submitAddProfileForm;
     (window as any).addFn = addEducation;
-    (window as any).addExperience=addExperience;
-    (window as any).addDoc=addDoc;
-    (window as any).addSkills=addSkills;
-    (window as any).previewImage=previewImage;
-    (window as any).openProfileModal=openProfileModal;
-   
+    (window as any).addExperience = addExperience;
+    (window as any).addDoc = addDoc;
+    (window as any).addSkills = addSkills;
+    (window as any).previewImage = previewImage;
+    (window as any).openProfileModal = openProfileModal;
+
     // const loadHTML = await getHTML()
 
     // load content
     // loadProfileDetails()
-    // const profileData=await 
+    // const profileData=await
     // console.log(profileData,"profileData")
-    getProfileData()
-    const profileModal = await createProfileModalHTML()
+    getProfileData();
+    const profileModal = await createProfileModalHTML();
 
     // loadProfileDetails()
 
     setTimeout(() => {
       initTopNavigation();
     }, 500);
-    
+
     // const editor:any=document.getElementById(`aboutYou`)
     //   ClassicEditor.create(editor,editorConfig)
     return `
-      ${topNavigation}
+      ${await topNavigation()}
       ${profileModal}
       <div id="loader" class="center"></div>
       <div class="w-4/5 mx-auto my-8">
@@ -340,8 +347,6 @@ export default class extends mainViewClass {
             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Update</button>
         </form>
       </div>
-    `
+    `;
   }
-
 }
-
