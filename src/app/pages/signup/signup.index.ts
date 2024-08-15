@@ -88,7 +88,7 @@ export default class extends mainViewClass {
            <div class="mt-2">
             <input type="checkbox" onclick="checkPrivacyPolicy(event)" name="privacyPolicy" id="privacyPolicy" autocomplete="confirm-password">
             <small class="text-sm my-4">Submitting this form you are agreed to the Terms and Conditions and Privacy Policy</small>
-            <small id="privacyPolicyError" style="color:red; display:none">Please accept privacy and policy</small>
+            <small id="privacyPolicyError" style="color:red; display:none">Please Accept Terms and Conditions and Privacy Policy</small>
             </div>
 
             <button class="bg-green-600 cursor-pointer hover:bg-green-900 text-white text-sm leading-6 font-medium py-3 px-6 m-2 rounded-lg" type="submit">Submit</button>
