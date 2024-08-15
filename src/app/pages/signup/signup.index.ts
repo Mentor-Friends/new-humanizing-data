@@ -1,6 +1,15 @@
 import mainViewClass from "../../default/mainView.class";
-import { submitSignupForm } from "./signup.service";
+import {submitSignupForm } from "./signup.service";
 
+
+export async function checkPrivacyPolicy(e:any) {
+  const inputPrivacyPolicyError = <HTMLInputElement>document.getElementById("privacyPolicyError");
+  if(e.target.checked){
+    inputPrivacyPolicyError.style.display="none";
+  }else{
+    inputPrivacyPolicyError.style.display="block";
+  }
+}
 export default class extends mainViewClass {
   constructor(params: any) {
     super(params);
@@ -10,6 +19,7 @@ export default class extends mainViewClass {
   async getHtml(): Promise<string> {
     // Attach the function to the global window object
     (window as any).submitSignupForm = submitSignupForm;
+    (window as any).checkPrivacyPolicy=checkPrivacyPolicy;
 
     return `
       <div class="grid grid-cols-1 md:grid-cols-2 h-screen overflow-y-auto text-zinc-900 bg-zinc-50 dark:text-white dark:bg-gray-900">
@@ -72,7 +82,11 @@ export default class extends mainViewClass {
             <label for="confirmPassword" class="block text-sm font-medium leading-6">Confirm password <span class="text-rose-400">*</span></label>
               <input type="password" name="confirmPassword" id="confirmPassword" autocomplete="confirm-password" class="block w-full rounded-md border-0 py-1.5 px-2 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6 text-zinc-900 bg-zinc-50 dark:text-white dark:bg-gray-900">
             </div>
-            <p class="text-sm my-4">Submitting this form you are agreed to the Terms and Conditions and Privacy Policy</p>
+           <div class="mt-2">
+            <input type="checkbox" onclick="checkPrivacyPolicy(event)" name="privacyPolicy" id="privacyPolicy" autocomplete="confirm-password">
+            <small class="text-sm my-4">Submitting this form you are agreed to the Terms and Conditions and Privacy Policy</small>
+            <small id="privacyPolicyError" style="color:red; display:none">Please accept privacy and policy</small>
+            </div>
 
             <button class="bg-green-600 cursor-pointer hover:bg-green-900 text-white text-sm leading-6 font-medium py-3 px-6 m-2 rounded-lg" type="submit">Submit</button>
           </form>
