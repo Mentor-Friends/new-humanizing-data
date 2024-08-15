@@ -9,6 +9,9 @@ import {
 } from "../../services/helper.service";
 import { environment } from "../../environments/environment.dev";
 
+/**
+ * List of status that a leave request can have
+ */
 export enum leaveStatus {
   Pending = "Pending",
   Approved = "Approved",
@@ -39,14 +42,13 @@ export async function getEmployeeUsers() {
 
 export async function fetchLeaveRequest(
   statusFilterItems: leaveStatus[] = [],
-  userConceptId?: number
+  userConceptId?: number,
 ) {
   const profileStorageData: any = await getLocalStorageData();
   const token = profileStorageData?.token;
 
   const roleId = await getRoleId(token);
   if (!roleId && !userConceptId) return [];
-  //   if (roleId) {
   const searchQuery = new SearchQuery();
   if (roleId) searchQuery.composition = roleId;
   searchQuery.listLinkers = ["the_user_s_has_humanizing_data_role_s"];
@@ -103,8 +105,6 @@ export async function fetchLeaveRequest(
 
     return formatUserLeaveRequests(res);
   }
-  //   }
-  return [];
 }
 
 function formatEmployeesLeaveRequests(role: any) {
@@ -147,7 +147,7 @@ type LeaveRequest = {
   reason: string;
   status: leaveStatus;
 };
-function formatLeave(leave: any): LeaveRequest {
+export function formatLeave(leave: any): LeaveRequest {
   return {
     id: leave?.id,
     type:
@@ -192,4 +192,14 @@ export async function getRoleId(token: string, roleName = "ROLE_EMPLOYEE") {
     return role[0].id;
   }
   return;
+}
+
+export function getLeaveDuration(fromdate: string, todate?: string) {
+  if (!todate) return 1;
+  if (fromdate == todate) return 1;
+  return (
+    (new Date("2024-08-14").getTime() - new Date("2024-08-13").getTime()) /
+      (86400 * 1000) +
+    1
+  ); // 1 added
 }

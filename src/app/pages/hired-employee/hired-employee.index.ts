@@ -1,10 +1,10 @@
 import mainViewClass from "../../default/mainView.class";
-import { showDropdownMenuOption } from "../../services/dropdown.service";
+import { toggleDropdownMenuOption } from "../../services/ui/dropdown.service";
 import { getEmployeeList, getEmployeeRows } from "./hired-employee.service";
 
 export default class extends mainViewClass {
   async getHtml(): Promise<string> {
-    (window as any).showDropdownMenuOption = showDropdownMenuOption;
+    (window as any).toggleDropdownMenuOption = toggleDropdownMenuOption;
 
     const employeeList = await getEmployeeList();
     const employeeRows = await getEmployeeRows(employeeList);

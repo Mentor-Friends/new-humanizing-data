@@ -1,7 +1,7 @@
 import mainViewClass from "../../../default/mainView.class";
 import { exportEmployeesAteendanceModalHTML } from "../../../modules/attendance/export-attendance/export-attendance.index";
-import { showDropdownMenuOption } from "../../../services/dropdown.service";
-import { sidebarHTML, sidebarMenu } from "../../../services/sidebar.service";
+import { toggleDropdownMenuOption } from "../../../services/ui/dropdown.service";
+import { sidebarHTML, sidebarMenu } from "../../../services/ui/sidebar.service";
 import {
   getCompanyEmployee,
   getEmployeesAttendanceList,
@@ -14,7 +14,7 @@ export default class extends mainViewClass {
   }
 
   async getHtml(): Promise<string> {
-    (window as any).showDropdownMenuOption = showDropdownMenuOption;
+    (window as any).toggleDropdownMenuOption = toggleDropdownMenuOption;
 
     const employeeAttendance = await getCompanyEmployee();
 

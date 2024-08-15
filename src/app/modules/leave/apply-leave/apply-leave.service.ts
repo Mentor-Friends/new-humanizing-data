@@ -12,7 +12,14 @@ export async function applyLeaveSubmit(e: any) {
   const formValues = Object.fromEntries(formData);
 
   console.log(formValues, "applu leave");
-  // TODO:: validation
+  if (
+    (new Date(formValues.todate.toString()).getTime() -
+      new Date(formValues.fromdate.toString()).getTime() <
+    0) || (new Date().getTime() > new Date(formValues.fromdate.toString()).getTime())
+  ) {
+    return;
+  }
+
   // to date cannot be in the past
   const profileStorageData: any = await getLocalStorageData();
   const userConceptId = profileStorageData?.userConcept;
