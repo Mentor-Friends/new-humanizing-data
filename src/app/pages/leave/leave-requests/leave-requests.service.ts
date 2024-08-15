@@ -7,6 +7,7 @@ import { hasRole } from "../../roles/role.helper";
 import {
   fetchLeaveRequest,
   getEmployeeUsers,
+  getLeaveDuration,
   leaveStatus,
 } from "../leave.helper";
 import { updateTypeConceptLocal } from "../../../services/UpdateTypeConcept";
@@ -266,14 +267,4 @@ function getStatusClass(status: string) {
       break;
   }
   return value;
-}
-
-function getLeaveDuration(fromdate: string, todate?: string) {
-  if (!todate) return 1;
-  if (fromdate == todate) return 1;
-  return (
-    (new Date("2024-08-14").getTime() - new Date("2024-08-13").getTime()) /
-      (86400 * 1000) +
-    1
-  ); // 1 added
 }

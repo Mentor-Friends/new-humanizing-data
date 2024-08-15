@@ -13,6 +13,8 @@ export default class extends mainViewClass {
 
   async getHtml() {
     const isEmployee = await hasRole("ROLE_EMPLOYEE");
+    const isEmployerOrAdmin =
+      (await hasRole("ROLE_EMPLOYER")) || (await hasRole("ROLE_ADMIN"));
 
     if (isEmployee)
       setTimeout(() => {
@@ -20,7 +22,8 @@ export default class extends mainViewClass {
       }, 500);
 
     return `
-      ${isEmployee ? topNavigation : await sidebarHTML()}
+      ${isEmployee ? topNavigation : ""}
+      ${isEmployerOrAdmin ? await sidebarHTML() : ''}
 
       <div class="container mx-auto my-8 grid grid-cols-1 ${
         isEmployee && `lg:grid-cols-2`

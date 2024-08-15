@@ -94,7 +94,7 @@ export async function removeRoleFromUser(body: {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
-  const response = await fetch(boomUrl + "/api/roles/remove", {
+  const response = await fetch(boomUrl + "/api/humanizing/userrole/remove", {
     method: "POST",
     headers: myHeaders,
     body: JSON.stringify(body),

@@ -13,9 +13,9 @@ export async function applyLeaveSubmit(e: any) {
 
   console.log(formValues, "applu leave");
   if (
-    new Date(formValues.todate.toString()).getTime() -
+    (new Date(formValues.todate.toString()).getTime() -
       new Date(formValues.fromdate.toString()).getTime() <
-    0
+    0) || (new Date().getTime() > new Date(formValues.fromdate.toString()).getTime())
   ) {
     return;
   }
