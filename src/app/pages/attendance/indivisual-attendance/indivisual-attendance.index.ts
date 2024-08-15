@@ -1,9 +1,7 @@
 import { GetCompositionWithId } from "mftsccs-browser";
 import mainViewClass from "../../../default/mainView.class";
 import { updateContent } from "../../../routes/renderRoute.service";
-import {
-  formatUserComposition,
-} from "../../../services/helper.service";
+import { formatUserComposition } from "../../../services/helper.service";
 import {
   generateMonthOptions,
   generateYearOptions,
@@ -18,8 +16,8 @@ import {
   showEditAttendanceModal,
 } from "./indivisual-attendance.service";
 import { exportEmployeesAteendanceModalHTML } from "../../../modules/attendance/export-attendance/export-attendance.index";
-import { sidebarHTML, sidebarMenu } from "../../../services/sidebar.service";
-import { showDropdownMenuOption } from "../../../services/dropdown.service";
+import { sidebarHTML, sidebarMenu } from "../../../services/ui/sidebar.service";
+import { toggleDropdownMenuOption } from "../../../services/ui/dropdown.service";
 
 export default class extends mainViewClass {
   userConcept!: number;
@@ -34,7 +32,7 @@ export default class extends mainViewClass {
   }
 
   async getHtml(): Promise<string> {
-    (window as any).showDropdownMenuOption = showDropdownMenuOption;
+    (window as any).toggleDropdownMenuOption = toggleDropdownMenuOption;
     (window as any).handleMonthlyDateChange = handleMonthlyDateChange;
     (window as any).showEditAttendanceModal = showEditAttendanceModal;
     (window as any).markAsAbsent = markAsAbsent;
@@ -62,7 +60,7 @@ export default class extends mainViewClass {
         ${await sidebarHTML()}
         <div class="flex flex-row justify-end px-4 py-2 shadow w-full">${sidebarMenu()}</div>
 
-        <div class="container mx-auto my-4 text-gray-800">
+        <div class="container mx-auto my-4">
             <div class="flex flex-row items-center justify-between mb-4">
                 <h3 class="text-4xl font-bold">Monthly Attendance</h3>
                 <div class="flex flex-row gap-4 items-end">

@@ -34,10 +34,10 @@ export default class extends mainViewClass {
           <h2 class="text-2xl">using the best practices to find staff and develop the software concepts you want.</h2>
         </div>
         <div class="flex justify-center mt-8">
-          <router-link href="/login"
+          <router-link href="/signup?type=person"
             class="bg-green-600 cursor-pointer hover:bg-green-900 text-white text-sm leading-6 font-medium py-3 px-6 m-2 rounded-lg">Join
             our team</router-link>
-          <router-link href="/signup"
+          <router-link href="/signup?type=company"
             class="bg-green-600 cursor-pointer hover:bg-green-900 text-white text-sm leading-6 font-medium py-3 px-6 m-2 rounded-lg">Hire
             our team</router-link>
         </div>
@@ -78,6 +78,7 @@ export default class extends mainViewClass {
             </ul>
           </div>
         </div>
+        <p class="text-right text-sm mt-4 me-8">8/15/2024 1.0.0</p>
       </div>
     `
   }

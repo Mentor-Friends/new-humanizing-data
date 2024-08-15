@@ -1,4 +1,5 @@
 import { exportAttendance } from "../../../pages/attendance/attendance.helper";
+import { closeModal } from "../../../services/modal.service";
 
 export function exportUserAttendance(e: any) {
   e.preventDefault();
@@ -11,14 +12,20 @@ export function exportUserAttendance(e: any) {
 
   let year = fromValues?.[`export-year`].toString();
   let unformatedMonth = parseInt(fromValues?.[`export-month`].toString());
-  let month = ("0" + (new Date(`${year}-${unformatedMonth + 1}`).getMonth() + 1)).slice(-2);
+  let month = (
+    "0" +
+    (new Date(`${year}-${unformatedMonth + 1}`).getMonth() + 1)
+  ).slice(-2);
   const date = `${year}-${month}`;
   const type: any = fromValues?.["export-format"].toString();
 
   if (fromValues?.["export-userConceptId"]) {
-    const userConceptIds = fromValues["export-userConceptId"].toString().split(",");
+    const userConceptIds = fromValues["export-userConceptId"]
+      .toString()
+      .split(",");
     exportAttendance(date, type, userConceptIds);
   } else {
     exportAttendance(date, type);
   }
+  closeModal("export-employees-ateendance");
 }

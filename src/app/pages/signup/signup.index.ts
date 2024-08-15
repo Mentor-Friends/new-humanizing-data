@@ -17,6 +17,9 @@ export default class extends mainViewClass {
   }
 
   async getHtml(): Promise<string> {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    let signupType = urlParams.get('type');
     // Attach the function to the global window object
     (window as any).submitSignupForm = submitSignupForm;
     (window as any).checkPrivacyPolicy=checkPrivacyPolicy;
@@ -37,9 +40,9 @@ export default class extends mainViewClass {
             <div class="mt-2">
               <label for="type" class="block text-sm font-medium leading-6">Type <span class="text-rose-400">*</span></label>
               <select id="type" name="type" autocomplete="type-name" class="block w-full rounded-md border-0 py-1.5 px-2 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6 text-zinc-900 bg-zinc-50 dark:text-white dark:bg-gray-900">
-                <option value="person">Person</option>
-                <option value="company">Company</option>
-                <option value"student">Student</option>
+                <option value="person" ${signupType=="company"?'disabled':''}>Person</option>
+                <option value="company" ${signupType=="person"?'disabled':''}>Company</option>
+                <option value"student" ${signupType=="company"?'disabled':''}>Student</option>
               </select>
             </div>
 

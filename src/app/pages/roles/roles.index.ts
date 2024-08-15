@@ -2,7 +2,7 @@ import mainViewClass from "../../default/mainView.class";
 import initNavigation from "../../modules/home-nav/home-navigation.service";
 import assignUserRoleModalHTML from "../../modules/roles/assign-user/assign-user-modal";
 import createRoleModalHTML from "../../modules/roles/create/create-role-modal";
-import { sidebarHTML, sidebarMenu } from "../../services/sidebar.service";
+import { sidebarHTML, sidebarMenu } from "../../services/ui/sidebar.service";
 import { closeRoleModal, getRolesList, openAssignUserRoleModal, openCreateRoleModal, showEditRoleModal } from "./roles.service";
 
 export default class extends mainViewClass {

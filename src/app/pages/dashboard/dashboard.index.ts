@@ -2,6 +2,7 @@ import mainViewClass from "../../default/mainView.class.ts";
 import { dailyAttendanceHTML } from "../../modules/attendance/daily-attendance/daily-attendance.index.ts";
 import { initTopNavigation } from "../../modules/top-nav/top-navigation.service.ts";
 import topNavigation from "../../modules/top-nav/top-navigation.ts";
+import { sidebarHTML, sidebarMenu } from "../../services/ui/sidebar.service.ts";
 import { hasRole } from "../roles/role.helper.ts";
 
 export default class extends mainViewClass {
@@ -11,14 +12,31 @@ export default class extends mainViewClass {
   }
 
   async getHtml() {
-    setTimeout(() => {
-      initTopNavigation();
-    }, 500);
+    const isEmployee = await hasRole("ROLE_EMPLOYEE");
+    const isEmployerOrAdmin =
+      (await hasRole("ROLE_EMPLOYER")) || (await hasRole("ROLE_ADMIN"));
+
+    if (isEmployee)
+      setTimeout(() => {
+        initTopNavigation();
+      }, 500);
+
     return `
-      ${topNavigation}
+      ${isEmployerOrAdmin ? await sidebarHTML() : topNavigation}
+
       <div class="container mx-auto my-8 grid grid-cols-1 ${
-        (await hasRole("ROLE_EMPLOYEE")) && `lg:grid-cols-2`
+        isEmployee && `lg:grid-cols-2`
       } gap-4">
+      ${
+        isEmployerOrAdmin
+          ? `
+          <div class="flex flex-row items-center justify-between">
+            <h3 class="text-2xl font-semibold mb-4">Dashboard</h3>
+            ${sidebarMenu()}
+          </div>
+        `
+          : ""
+      }
         <div class="w-full px-6 py-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
           <div class="mx-auto my-8 max-w-7xl px-4 sm:px-6 lg:px-8 mx-auto pt-20 text-zinc-900 dark:text-white dark:bg-gray-900">
             <h1>Welcome to <strong>Humanizing Data</strong> !</h1>
@@ -27,10 +45,11 @@ export default class extends mainViewClass {
           <router-link href="/profile" class="cursor-default float-right bg-green-500 text-white rounded-md px-4 py-2 hover:bg-green-700 transition">Update Your Profile</router-link>
         </div>
         ${
-          (await hasRole("ROLE_EMPLOYEE")) ?
-          `<div class="w-full px-6 py-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+          (await hasRole("ROLE_EMPLOYEE"))
+            ? `<div class="w-full px-6 py-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             ${await dailyAttendanceHTML()}
-        </div>` : ''
+        </div>`
+            : ""
         }
       </div>
     `;

@@ -1,6 +1,5 @@
 import {
   FilterSearch,
-  MakeTheInstanceConcept,
   SearchLinkMultipleAll,
   SearchQuery,
 } from "mftsccs-browser";
@@ -14,16 +13,11 @@ import {
   getDuration,
 } from "../attendance.helper";
 import { openModal } from "../../../services/modal.service";
+import { getRoleId } from "../../leave/leave.helper";
 
 export async function getCompanyEmployee(filterDate?: string) {
   const profileStorageData: any = await getLocalStorageData();
   const token = profileStorageData?.token;
-  const companyConcept = await MakeTheInstanceConcept(
-    "currentCompany",
-    "Boomconsole",
-    false,
-    999
-  );
   let searchDate = `${new Date().getFullYear()}-${(
     "0" +
     (new Date().getMonth() + 1)
@@ -33,14 +27,14 @@ export async function getCompanyEmployee(filterDate?: string) {
     searchDate = filterDate;
   }
 
-  const search1 = new SearchQuery();
-  search1.composition = companyConcept.id;
-  search1.reverse = true;
-  search1.fullLinkers = ["the_profile_currentCompany"];
+  const roleId = await getRoleId(token);
+  if (!roleId) return [];
 
-  const search2 = new SearchQuery();
-  search2.reverse = true;
-  search2.fullLinkers = ["the_user_profile"];
+  const search1 = new SearchQuery();
+  search1.composition = roleId;
+  search1.listLinkers = ["the_user_s_has_humanizing_data_role_s"];
+  search1.reverse = true;
+  search1.inpage = 100;
 
   const dateFilter = new FilterSearch();
   dateFilter.type = "date";
@@ -48,53 +42,44 @@ export async function getCompanyEmployee(filterDate?: string) {
   dateFilter.search = `%${searchDate}%`;
   dateFilter.composition = false;
 
-  const search3 = new SearchQuery();
-  search3.fullLinkers = ["the_user_s_attendance"];
-  search3.inpage = 100;
-  search3.doFilter = true;
+  const search2 = new SearchQuery();
+  search2.fullLinkers = ["the_user_s_attendance"];
+  search2.inpage = 100;
+  search2.doFilter = true;
 
-  const search4 = new SearchQuery();
-  search4.filterSearches = [dateFilter];
-  search4.logic = "or";
-  search4.selectors = [
+  const search3 = new SearchQuery();
+  search3.filterSearches = [dateFilter];
+  search3.logic = "or";
+  search3.selectors = [
     "the_attendance_date",
     "the_attendance_checkin",
     "the_attendance_checkout",
     "the_attendance_status",
   ];
-  search4.fullLinkers = ["the_attendance_date"];
-  search4.doFilter = true;
-  search4.inpage = 100;
+  search3.fullLinkers = ["the_attendance_date"];
+  search3.doFilter = true;
+  search3.inpage = 100;
 
   const searchData = await SearchLinkMultipleAll(
-    [search1, search2, search3, search4],
+    [search1, search2, search3],
     token
   );
 
   let users: any[] = [];
-  if (
-    searchData?.data?.the_currentCompany
-      ?.the_profile_currentCompany_reverse?.[0]?.data?.the_profile
-      ?.the_user_profile_reverse?.length > 0
-  ) {
-    let profiles =
-      searchData?.data?.the_currentCompany?.the_profile_currentCompany_reverse;
-    for (let i = 0; i < profiles.length; i++) {
-      const profile = profiles[i];
-      const attendances =
-        profile?.data?.the_profile?.the_user_profile_reverse?.[0]?.data
-          ?.the_user?.the_user_s_attendance;
+  const userList =
+    searchData?.data?.humanizing_data_internal_role_name
+      ?.the_user_s_has_humanizing_data_role_s_reverse;
+  if (!userList) return [];
 
-      users.push({
-        user: await formatUserComposition(
-          profile?.data?.the_profile?.the_user_profile_reverse?.[0]
-        ),
-        attendances: await formatUserAttendance(attendances),
-      });
-    }
+  for (let i = 0; i < userList.length; i++) {
+    const user = userList[i];
+    users.push({
+      user: formatUserComposition(user),
+      attendances: await formatUserAttendance(
+        user?.data?.the_user?.["the_user_s_attendance"]
+      ),
+    });
   }
-  console.log("a", searchData, searchDate);
-  // filter same users
   users = [...new Map(users.map((item) => [item.user.id, item])).values()];
   return users;
 }
@@ -116,10 +101,11 @@ export function getEmployeesAttendanceList(employees: any[]) {
     const dailyDate = `${new Date().getFullYear()}-${(
       "0" +
       (new Date().getMonth() + 1)
-    ).slice(-2)}-0${new Date().getDate()}`;
+    ).slice(-2)}-${("0" + new Date().getDate()).slice(-2)}`;
     console.log(dailyDate);
 
     const obj = calculateAttendance(employee.attendances || [], dailyDate);
+    console.log(obj, "object");
 
     employeesAttendanceRows += `
           <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
@@ -208,7 +194,7 @@ export function getEmployeesAttendanceList(employees: any[]) {
                   : obj.status == "Absent" && "bg-red-400"
               }">
                   <div class="inline-block text-left">
-                      <button type="button" onclick="showDropdownMenuOption('dropdown-menu-${
+                      <button type="button" onclick="toggleDropdownMenuOption(event, 'dropdown-menu-${
                         employee.user.id
                       }')" class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-2 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" id="menu-button" aria-expanded="true" aria-haspopup="true">
                           <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="inherit"><path d="M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z"/></svg>
