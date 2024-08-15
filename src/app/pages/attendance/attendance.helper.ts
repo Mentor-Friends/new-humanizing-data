@@ -81,6 +81,18 @@ export function getDateInMonth(year: number, month: number) {
 }
 
 /**
+ * Method to inverse table rows
+ * @param tbodyId string
+ */
+export function inverseTableRows(tbodyId: string) {
+    const tbody = document.getElementById(tbodyId) as HTMLTableSectionElement;
+    if (tbody) {
+      const rows = Array.from(tbody.rows);
+      rows.reverse().forEach(row => tbody.appendChild(row));
+    }
+}
+
+/**
  * Method to search the user attendance
  * @param compositionId string
  * @param searchDate string
@@ -218,7 +230,7 @@ export async function getUserMonthlyAttendanceRows(
 
   let attendanceRows = "";
 
-  dateList.forEach((date: string) => {
+  dateList.reverse().forEach((date: string) => {
     const obj = calculateAttendance(monthlyAttendance, date);
 
     attendanceRows +=
@@ -278,7 +290,7 @@ export async function getUserMonthlyAttendanceRows(
           obj.checkin ? "bg-green-400" : obj.status == "Absent" && "bg-red-400"
         }">
           <div class="inline-block text-left">
-              <button type="button" onclick="showDropdownMenuOption('dropdown-menu-${
+              <button type="button" onclick="toggleDropdownMenuOption(event, 'dropdown-menu-${
                 obj.currentDate
               }')" class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-2 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" id="menu-button" aria-expanded="true" aria-haspopup="true">
                   <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="inherit"><path d="M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z"/></svg>

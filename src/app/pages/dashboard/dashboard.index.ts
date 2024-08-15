@@ -2,7 +2,7 @@ import mainViewClass from "../../default/mainView.class.ts";
 import { dailyAttendanceHTML } from "../../modules/attendance/daily-attendance/daily-attendance.index.ts";
 import { initTopNavigation } from "../../modules/top-nav/top-navigation.service.ts";
 import topNavigation from "../../modules/top-nav/top-navigation.ts";
-import { sidebarHTML, sidebarMenu } from "../../services/sidebar.service.ts";
+import { sidebarHTML, sidebarMenu } from "../../services/ui/sidebar.service.ts";
 import { hasRole } from "../roles/role.helper.ts";
 
 export default class extends mainViewClass {
@@ -13,6 +13,8 @@ export default class extends mainViewClass {
 
   async getHtml() {
     const isEmployee = await hasRole("ROLE_EMPLOYEE");
+    const isEmployerOrAdmin =
+      (await hasRole("ROLE_EMPLOYER")) || (await hasRole("ROLE_ADMIN"));
 
     if (isEmployee)
       setTimeout(() => {
@@ -20,7 +22,8 @@ export default class extends mainViewClass {
       }, 500);
 
     return `
-      ${isEmployee ? topNavigation : await sidebarHTML()}
+      ${isEmployee ? topNavigation : ""}
+      ${isEmployerOrAdmin ? await sidebarHTML() : ''}
 
       <div class="container mx-auto my-8 grid grid-cols-1 ${
         isEmployee && `lg:grid-cols-2`
