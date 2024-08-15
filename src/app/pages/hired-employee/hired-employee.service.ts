@@ -108,7 +108,7 @@ export function getEmployeeRows(employeeList: any[]) {
             ${employee?.department ? employee?.department : ""}
           </td>
           <td scope="row" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-            <div class="inline-block text-left">
+            <div class="inline-block text-left hidden">
               <button type="button" onclick="toggleDropdownMenuOption(event, 'dropdown-menu-${
                 employee.id
               }')" class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-1 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" id="menu-button" aria-expanded="true" aria-haspopup="true">

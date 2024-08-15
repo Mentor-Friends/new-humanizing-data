@@ -29,7 +29,7 @@ export default class extends mainViewClass {
     const scheduleModal = await createSetInterviewModalHTML();
     const IndividualProfileModal = await createViewIndividualProfileModalHTML();
     return `
-      ${topNavigation}
+      ${await topNavigation()}
       ${scheduleModal}
       ${IndividualProfileModal}
       <section class="py-8 bg-white md:py-16 dark:bg-gray-900 antialiased">
