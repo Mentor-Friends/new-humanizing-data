@@ -16,7 +16,6 @@ export default class extends mainViewClass {
     }, 100);
 
     const mainNavigation = await loadHomeNavHTML()
-    const date = new Date().toLocaleString()
     
     // ${homeNavigation}
     return `
@@ -79,7 +78,7 @@ export default class extends mainViewClass {
             </ul>
           </div>
         </div>
-        <p class="text-right text-sm mt-4 me-8">${date}</p>
+        <p class="text-right text-sm mt-4 me-8">8/15/2024 1.0.0</p>
       </div>
     `
   }
