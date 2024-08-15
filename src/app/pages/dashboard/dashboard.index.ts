@@ -22,17 +22,16 @@ export default class extends mainViewClass {
       }, 500);
 
     return `
-      ${isEmployee ? topNavigation : ""}
-      ${isEmployerOrAdmin ? await sidebarHTML() : ''}
+      ${isEmployerOrAdmin ? await sidebarHTML() : topNavigation}
 
       <div class="container mx-auto my-8 grid grid-cols-1 ${
         isEmployee && `lg:grid-cols-2`
       } gap-4">
       ${
-        !isEmployee
+        isEmployerOrAdmin
           ? `
           <div class="flex flex-row items-center justify-between">
-            <h3 class="text-2xl font-semibold mb-4">Leave Requests</h3>
+            <h3 class="text-2xl font-semibold mb-4">Dashboard</h3>
             ${sidebarMenu()}
           </div>
         `
