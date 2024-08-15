@@ -58,7 +58,7 @@ export async function hasPermission(
 
 async function getLocalRoles() {
   const profileStorageData: any = await getLocalStorageData();
-  const rolesData = JSON.parse(atob(profileStorageData?.amcode)) || [];
+  const rolesData = JSON.parse(atob(profileStorageData?.amcode || '')) || [];
   if (!Array.isArray(rolesData)) return [];
   let roles = rolesData.map((role: any) => {
     return {

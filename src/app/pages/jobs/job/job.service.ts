@@ -136,7 +136,7 @@ export async function getJobApplicants(jobProductId: number) {
     const applicantList = applicantData?.map((applicant: any) => {
       const applicantUserData =
         applicant?.data?.the_entity?.the_entity_user?.[0]?.data?.the_user;
-        const userProfileIndex = applicantUserData?.the_user_profile?.length - 1;
+      const userProfileIndex = applicantUserData?.the_user_profile?.length - 1;
       return {
         entityId: applicant?.id,
         userConceptId: applicant?.data?.the_entity?.the_entity_user?.[0]?.id,

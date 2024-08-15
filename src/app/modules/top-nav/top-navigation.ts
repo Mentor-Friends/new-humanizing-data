@@ -17,6 +17,7 @@ export default `
       <li><router-link href="/calendar" class="top-nav-item cursor-pointer text-sm text-gray-600 hover:text-gray-500">Calendar</router-link></li>
       <li><router-link href="/items" class="top-nav-item cursor-pointer text-sm text-gray-600 hover:text-gray-500">Items</router-link></li>
       <li><router-link href="/jobs" class="top-nav-item cursor-pointer text-sm text-gray-600 hover:text-gray-500">Career</router-link></li>
+      <li><router-link href="/leave-requests" class="top-nav-item cursor-pointer text-sm text-gray-600 hover:text-gray-500">Leave Requests</router-link></li>
       <li>
         <div class="relative group">
           <router-link class="top-nav-item cursor-pointer text-sm text-gray-600 hover:text-gray-500">

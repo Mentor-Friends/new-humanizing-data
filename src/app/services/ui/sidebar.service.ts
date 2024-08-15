@@ -1,5 +1,5 @@
-import { hasPermission, hasRole } from "../pages/roles/role.helper";
-import { Permission, PermissionAction } from "../pages/roles/roles.service";
+import { hasPermission, hasRole } from "../../pages/roles/role.helper";
+import { Permission, PermissionAction } from "../../pages/roles/roles.service";
 
 export async function sidebarHTML() {
   (window as any).openSidebar = openSidebar;
@@ -157,10 +157,11 @@ const menus = async () => {
       url: "/attendance",
       svg: `<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor"><path d="m612-550 141-142-28-28-113 113-57-57-28 29 85 85ZM120-160v-80h480v80H120Zm520-280q-83 0-141.5-58.5T440-640q0-83 58.5-141.5T640-840q83 0 141.5 58.5T840-640q0 83-58.5 141.5T640-440Zm-520-40v-80h252q7 22 16 42t22 38H120Zm0 160v-80h376q23 14 49 23.5t55 13.5v43H120Z"/></svg>`,
       name: "Attendnace",
-      permission: await hasPermission(Permission.attendance, [
-        PermissionAction.create,
-        PermissionAction.view,
-      ]) && hasRole('ROLE_EMPLOYEE'),
+      permission:
+        (await hasPermission(Permission.attendance, [
+          PermissionAction.create,
+          PermissionAction.view,
+        ])) && hasRole("ROLE_EMPLOYEE"),
     },
     {
       url: "/employee/attendance",
