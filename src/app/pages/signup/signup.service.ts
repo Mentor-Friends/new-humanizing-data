@@ -30,7 +30,17 @@ export async function submitSignupForm(e: any) {
     document.getElementById("confirmPassword")
   );
   const confirmPasswordValue = inputConfirmPassword?.value;
-  console.log("confirmPasswordValue", confirmPasswordValue);
+  // console.log(confirmPasswordValue,"confirmPasswordValue");
+  const inputprivacyPolicy = <HTMLInputElement>(
+    document.getElementById("privacyPolicy")
+  );
+  const privacyPolicy = inputprivacyPolicy?.checked;
+  const inputPrivacyPolicyError = <HTMLInputElement>(
+    document.getElementById("privacyPolicyError")
+  );
+  if (!privacyPolicy) {
+    inputPrivacyPolicyError.style.display = "block";
+  }
 
   const signupData: any = {
     type: typeValue,
@@ -42,10 +52,11 @@ export async function submitSignupForm(e: any) {
     fname: firstNameValue,
     lname: lastNameValue,
   };
-
-  const signupResponse = await signup(signupData);
-  if (!signupResponse?.error && signupResponse?.data) {
-    updateContent("/login");
+  if (privacyPolicy) {
+    const signupResponse = await signup(signupData);
+    if (!signupResponse?.error && signupResponse?.data) {
+      updateContent("/login");
+    }
   }
 }
 
