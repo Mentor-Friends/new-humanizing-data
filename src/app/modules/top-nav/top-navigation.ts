@@ -14,6 +14,7 @@ export default `
     <ul id="top-nav" class="hidden lg:flex lg:mx-auto lg:flex lg:items-center lg:mr-8 justify-end lg:w-auto lg:space-x-6">
       <li><router-link href="/dashboard" class="top-nav-item cursor-pointer text-sm text-gray-600 hover:text-gray-500">Dashboard</router-link></li>
       <li><router-link href="/attendance" class="top-nav-item cursor-pointer text-sm text-gray-600 hover:text-gray-500">Attendance</router-link></li>
+      <li><router-link href="/accounting" class="top-nav-item cursor-pointer text-sm text-gray-600 hover:text-gray-500">Accounting</router-link></li>
       <li><router-link href="/calendar" class="top-nav-item cursor-pointer text-sm text-gray-600 hover:text-gray-500">Calendar</router-link></li>
       <li><router-link href="/items" class="top-nav-item cursor-pointer text-sm text-gray-600 hover:text-gray-500">Items</router-link></li>
       <li><router-link href="/jobs" class="top-nav-item cursor-pointer text-sm text-gray-600 hover:text-gray-500">Career</router-link></li>
@@ -96,6 +97,7 @@ export default `
         <ul>
           <li><router-link href="/dashboard" class="top-nav-item cursor-pointer text-sm text-gray-600 hover:text-gray-500">Dashboard</router-link></li>
           <li><router-link href="/attendance" class="top-nav-item cursor-pointer text-sm text-gray-600 hover:text-gray-500">Attendance</router-link></li>
+             <li><router-link href="/accounting" class="top-nav-item cursor-pointer text-sm text-gray-600 hover:text-gray-500">Accounting</router-link></li>
           <li><router-link href="/calendar" class="top-nav-item cursor-pointer text-sm text-gray-600 hover:text-gray-500">Calendar</router-link></li>
           <li><router-link href="/items" class="top-nav-item cursor-pointer text-sm text-gray-600 hover:text-gray-500">Items</router-link></li>
           <li><router-link href="/jobs" class="top-nav-item cursor-pointer text-sm text-gray-600 hover:text-gray-500">Career</router-link></li>
