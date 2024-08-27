@@ -935,24 +935,24 @@ export async function getProfileData() {
   
     inputFirstName.value =
       data?.the_profile_first_name?.[0]?.data?.the_first_name ||
-      profileList?.entity?.person?.first_name || '';
+      profileList?.entity?.person?.first_name || "";
 
     const inputLastName = <HTMLInputElement>(
       document.getElementById("last_name")
     );
     inputLastName.value =
       data?.the_profile_last_name?.[0]?.data?.the_last_name ||
-      profileList?.entity?.person?.last_name;
+      profileList?.entity?.person?.last_name ||"";
 
     const inputEmail = <HTMLInputElement>document.getElementById("email");
     inputEmail.value =
       data?.the_profile_email?.[0]?.data?.the_email ||
-      profileList?.entity?.person?.email;
+      profileList?.entity?.person?.email || "";
 
     const inputPhone = <HTMLInputElement>document.getElementById("phone");
     inputPhone.value =
       data?.the_profile_phone?.[0]?.data?.the_phone ||
-      profileList?.entity?.person?.phone;
+      profileList?.entity?.person?.phone || "";
 
     const inputDob = <HTMLInputElement>document.getElementById("dob");
     inputDob.value = data?.the_profile_dob?.[0]?.data?.the_dob || "";

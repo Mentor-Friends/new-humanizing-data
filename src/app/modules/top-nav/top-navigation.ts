@@ -102,6 +102,7 @@ export default async function topNavigation() {
         <ul>
           <li><router-link href="/dashboard" class="top-nav-item cursor-pointer text-sm text-gray-600 hover:text-gray-500">Dashboard</router-link></li>
           <li><router-link href="/attendance" class="top-nav-item cursor-pointer text-sm text-gray-600 hover:text-gray-500">Attendance</router-link></li>
+             <li><router-link href="/accounting" class="top-nav-item cursor-pointer text-sm text-gray-600 hover:text-gray-500">Accounting</router-link></li>
           <li><router-link href="/calendar" class="top-nav-item cursor-pointer text-sm text-gray-600 hover:text-gray-500">Calendar</router-link></li>
           <li><router-link href="/items" class="top-nav-item cursor-pointer text-sm text-gray-600 hover:text-gray-500">Items</router-link></li>
           <li><router-link href="/jobs" class="top-nav-item cursor-pointer text-sm text-gray-600 hover:text-gray-500">Career</router-link></li>

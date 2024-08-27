@@ -22,6 +22,7 @@ import appliedJobsIndex from "../pages/jobs/appliedJobs/appliedJobs.index.ts";
 import postedJobsIndex from "../pages/jobs/postedJobs/postedJobs.index.ts";
 import calendarIndex from "../pages/calendar/calendar.index.ts";
 import settingsIndex from "../pages/settings/settings.index.ts";
+import accountingIndex from "../pages/accounting/accounting.index.ts";
 
 type RouteParams = {
   path: any;
@@ -163,7 +164,11 @@ const routes: RouteParams[] = [
     path: "/settings",
     content: settingsIndex,
     isAuthenticated: true,
-  },
+  },{
+    path: "/accounting",
+    content: accountingIndex,
+    isAuthenticated: true,
+  }
 ];
 
 export default routes;
