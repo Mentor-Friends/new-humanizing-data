@@ -134,7 +134,6 @@ export async function populateUserDropdown() {
 export async function populateLeaveRequests(leaveRequests: any[] = []) {
   const leaveRequestBody = document.getElementById("leave-requests");
   if (!leaveRequestBody) return;
-
   if (leaveRequests.length == 0) {
     console.log("here");
     leaveRequestBody.innerHTML = `
@@ -182,9 +181,9 @@ export async function populateLeaveRequests(leaveRequests: any[] = []) {
               request.fromdate,
               request.todate
             )}</td>
-            <td scope="row" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap text-center dark:text-white">${
-              request.reason
-            }</td>
+            <td scope="row" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap text-center dark:text-white">
+              <span class="max-w-96 text-ellipsis">${request.reason}</span>
+            </td>
             <td scope="row" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap text-center dark:text-white">
               <span class="${getStatusClass(request.status)}">
                 ${request.status}

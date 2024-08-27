@@ -17,7 +17,7 @@ export default class extends mainViewClass {
     }, 500);
 
     return `
-      ${topNavigation}
+      ${await topNavigation()}
       <section class="py-8">
         <!-- <div class="p-10 text-center text-zinc-900 dark:text-white" id="job-list-loader">
           <h5>Loading...</h5>

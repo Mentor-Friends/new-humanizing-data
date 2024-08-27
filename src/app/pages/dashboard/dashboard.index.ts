@@ -22,7 +22,7 @@ export default class extends mainViewClass {
       }, 500);
 
     return `
-      ${isEmployerOrAdmin ? await sidebarHTML() : topNavigation}
+      ${isEmployerOrAdmin ? await sidebarHTML() : await topNavigation()}
 
       <div class="container mx-auto my-8 grid grid-cols-1 ${
         isEmployee && `lg:grid-cols-2`

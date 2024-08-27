@@ -227,6 +227,24 @@ const menus = async () => {
         PermissionAction.update,
         PermissionAction.delete,
       ]),
+      subMenus: [
+        {
+          url: "/leave",
+          name: "Employees Leave",
+          permission: await hasPermission(
+            Permission.leave,
+            PermissionAction.delete
+          ),
+        },
+        {
+          url: "/leave-requests",
+          name: "Leave Request",
+          permission: await hasPermission(
+            Permission.leave,
+            PermissionAction.delete
+          ),
+        },
+      ]
     },
     {
       url: "/settings",
