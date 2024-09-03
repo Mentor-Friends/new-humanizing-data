@@ -6,6 +6,7 @@ import {
 import { MONTHS } from "../../constants/time.constants";
 import { getLocalStorageData } from "../../services/helper.service";
 import { getCompanyEmployee } from "./employees-attendance/employees-attendance.service";
+import { logout } from "../../modules/top-nav/top-navigation.service";
 
 export type Attendance = {
   id: any;
@@ -150,6 +151,11 @@ export async function searchUserAttendance(
     [searchQuery, attendanceQuery],
     token
   );
+
+  if (user.status === 401) {
+    logout()
+  }
+
   console.log(
     searchDate,
     "abcbedaa",
