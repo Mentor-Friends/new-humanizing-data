@@ -1,6 +1,6 @@
 import {
   GetTheConceptLocal,
-  LConcept,
+  Concept,
   LocalSyncData,
   MakeTheInstanceConceptLocal,
   SearchLinkInternal,
@@ -31,7 +31,7 @@ import { interviewschedueGetFormData } from "../../../modules/setInterview-modal
 import { getProfileFormData } from "../../../modules/setInterview-modal/setIndividualProfileView-modal";
 
 const thetaBoommAPI = environment?.boomURL;
-// let attachmentConcept: LConcept;
+// let attachmentConcept: Concept;
 // for modal
 
 export async function openIndividualProfileModal(
@@ -295,8 +295,8 @@ export async function applyJob(itemId: number) {
   console.log("itemId", itemId);
   console.log("jobId", jobId);
 
-  const userEntityConcept: LConcept = await GetTheConceptLocal(userEntityId);
-  const jobItemConcept: LConcept = await GetTheConceptLocal(jobId);
+  const userEntityConcept: Concept = await GetTheConceptLocal(userEntityId);
+  const jobItemConcept: Concept = await GetTheConceptLocal(jobId);
 
   console.log("userEntityConcept", userEntityConcept);
   console.log("jobItemConcept", jobItemConcept);
@@ -686,12 +686,12 @@ export async function createItemSKU(formValues: any) {
   let urlPath = location.pathname;
   let itemId = Number(urlPath.substring(5));
 
-  const itemEntityConcept: LConcept = await GetTheConceptLocal(itemId);
+  const itemEntityConcept: Concept = await GetTheConceptLocal(itemId);
 
   const profileStorageData: any = await getLocalStorageData();
   const userId = profileStorageData?.userId;
 
-  const skuEntityConcept: LConcept = await createEntityInstance(
+  const skuEntityConcept: Concept = await createEntityInstance(
     "sku",
     userId,
     formValues
@@ -724,7 +724,7 @@ export async function createItemSKU(formValues: any) {
 // }
 
 export async function createListingPlatform() {
-  const listingInstanceConcept: LConcept = await MakeTheInstanceConceptLocal(
+  const listingInstanceConcept: Concept = await MakeTheInstanceConceptLocal(
     `the_listing`,
     "Nepal CRE",
     true,
@@ -805,7 +805,7 @@ export async function createListingPlatform() {
 //   );
 
 //   // the_rfq_buyer
-//   const buyerConcept: LConcept = await GetTheConceptLocal(
+//   const buyerConcept: Concept = await GetTheConceptLocal(
 //     profileStorageData?.entityId
 //   );
 //   await CreateConnectionBetweenEntityLocal(
@@ -861,7 +861,7 @@ export async function getBuyerAgentData(
   userId: number,
   token: string
 ) {
-  let buyerAgentEntityConcept: LConcept;
+  let buyerAgentEntityConcept: Concept;
 
   let search = new SearchStructure();
   search.composition = "the_buyeragent";
@@ -872,7 +872,7 @@ export async function getBuyerAgentData(
 
   // return
 
-  // let buyerAgentEntityConcept: LConcept;
+  // let buyerAgentEntityConcept: Concept;
 
   // const myHeaders = new Headers();
   // myHeaders.append("Content-Type", "application/json");

@@ -1,7 +1,7 @@
 import {
   DeleteConnectionById,
   GetRelation,
-  LConcept,
+  Concept,
   MakeTheInstanceConceptLocal,
 } from "mftsccs-browser";
 import { getConnectionList } from "./GetConnection";
@@ -11,7 +11,7 @@ import { CreateConnectionBetweenEntityLocal } from "./entity.service";
  * 
  * @param userId number
  * @param token string
- * @param fromConcept LConcept
+ * @param fromConcept Concept
  * @param linker string
  * @param key string
  * @param value string
@@ -19,7 +19,7 @@ import { CreateConnectionBetweenEntityLocal } from "./entity.service";
 export const updateTypeConceptLocal = async (
   userId: number,
   token: string,
-  fromConcept: LConcept,
+  fromConcept: Concept,
   linker: string,
   key: string,
   value: string
@@ -43,7 +43,7 @@ export const updateTypeConceptLocal = async (
   }
 
   // create new link
-  const keyConcept: LConcept = await MakeTheInstanceConceptLocal(
+  const keyConcept: Concept = await MakeTheInstanceConceptLocal(
     key,
     value,
     false,

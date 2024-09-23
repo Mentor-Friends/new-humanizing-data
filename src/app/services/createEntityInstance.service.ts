@@ -1,6 +1,5 @@
 import {
   Concept,
-  LConcept,
   MakeTheInstanceConcept,
   MakeTheInstanceConceptLocal,
   SyncData,
@@ -16,7 +15,7 @@ export async function createEntityInstance(
   userId: number,
   conepts: any
 ) {
-  const entityConcept: LConcept = await MakeTheInstanceConceptLocal(
+  const entityConcept: Concept = await MakeTheInstanceConceptLocal(
     `the_${entityType}`,
     "",
     true,
@@ -28,7 +27,7 @@ export async function createEntityInstance(
   for (const [key, value] of Object.entries(conepts)) {
     let ObjKey = key;
 
-    const keyConcept: LConcept = await MakeTheInstanceConceptLocal(
+    const keyConcept: Concept = await MakeTheInstanceConceptLocal(
       `${ObjKey}`,
       `${value}`,
       false,
