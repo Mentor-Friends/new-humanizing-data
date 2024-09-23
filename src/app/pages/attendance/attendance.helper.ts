@@ -157,7 +157,7 @@ export async function searchUserAttendance(
       user?.data?.["the_user"]?.["the_user_s_attendance"]
     );
   } catch (error: any) {
-    console.log(error, error.status);
+    console.error(error, error.status);
     if (error.status === 401) {
       logout();
     }
