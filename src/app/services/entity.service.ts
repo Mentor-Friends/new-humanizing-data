@@ -55,7 +55,7 @@ export async function CreateConnectionBetweenEntityLocal(
 
   const connectionConcept = await MakeTheTypeConceptLocal(forwardLinker, sessionInformationId, sessionInformationUserId, userId);
   // console.warn('connectionConcept', connectionConcept)
-  CreateTheConnectionLocal(concept1Data.id, concept2Data.id, connectionConcept.id, 1000);
+  await CreateTheConnectionLocal(concept1Data.id, concept2Data.id, connectionConcept.id, 1000);
 
   // const newConnection = new LConnection(
   //   0,

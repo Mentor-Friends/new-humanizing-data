@@ -12,20 +12,20 @@ import { logout } from "../../top-nav/top-navigation.service";
 let processingAttendance = false;
 
 export async function handleAttendanceClick() {
+  if (processingAttendance) return;
+  processingAttendance = true;
+  const profileStorageData: any = await getLocalStorageData();
+  const userId = profileStorageData?.userId;
+  const userConceptId = profileStorageData?.userConcept;
+
+  const checkInBtn = document.getElementById(
+    "checkin-btn"
+  ) as HTMLButtonElement;
+  const checkOutBtn = document.getElementById(
+    "checkout-btn"
+  ) as HTMLButtonElement;
+
   try {
-    if (processingAttendance) return;
-    processingAttendance = true;
-    const profileStorageData: any = await getLocalStorageData();
-    const userId = profileStorageData?.userId;
-    const userConceptId = profileStorageData?.userConcept;
-
-    const checkInBtn = document.getElementById(
-      "checkin-btn"
-    ) as HTMLButtonElement;
-    const checkOutBtn = document.getElementById(
-      "checkout-btn"
-    ) as HTMLButtonElement;
-
     const userConcept = await GetTheConceptLocal(userConceptId);
 
     // check if the user have already logged in
@@ -34,8 +34,6 @@ export async function handleAttendanceClick() {
       new Date().toISOString().slice(0, 10)
     );
     const attendanceConcept = await haveActiveAttendance(attendanceList);
-    console.log(attendanceConcept);
-    console.log("attendanceList", attendanceConcept);
 
     if (attendanceConcept) {
       // checkout
@@ -55,8 +53,6 @@ export async function handleAttendanceClick() {
       checkInBtn.disabled = false;
       checkOutBtn.disabled = true;
     } else {
-      console.log("checkin");
-
       // checkin
       const attendanceEntityConcept = await createEntityInstance(
         "attendance",
@@ -107,7 +103,6 @@ async function haveActiveAttendance(attendanceList: any) {
       attendanceId = attendance.id;
     }
   }
-  console.log(ids, "ids");
   if (!checkin) return await GetTheConceptLocal(attendanceId);
   return;
   if (attendanceList[0]?.checkin && !attendanceList[0]?.checkout)
