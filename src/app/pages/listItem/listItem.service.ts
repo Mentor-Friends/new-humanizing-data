@@ -1,6 +1,6 @@
 import {
   GetTheConceptLocal,
-  LConcept,
+  Concept,
   LocalSyncData,
   MakeTheInstanceConceptLocal,
   SearchLinkInternal,
@@ -27,7 +27,7 @@ import listModalHTML from "../../modules/list-modal/list-modal";
 import { showToast } from "../../modules/toast-bar/toast-bar.index";
 
 const thetaBoommAPI = environment?.boomURL;
-let attachmentConcept: LConcept;
+let attachmentConcept: Concept;
 let rfqModalHTMLCode = `
   <h1>Hey</h1>
 `;
@@ -440,12 +440,12 @@ export async function createItemSKU(formValues: any) {
   let urlPath = location.pathname;
   let itemId = Number(urlPath.substring(10));
 
-  const itemEntityConcept: LConcept = await GetTheConceptLocal(itemId);
+  const itemEntityConcept: Concept = await GetTheConceptLocal(itemId);
 
   const profileStorageData: any = await getLocalStorageData();
   const userId = profileStorageData?.userId;
 
-  const skuEntityConcept: LConcept = await createEntityInstance(
+  const skuEntityConcept: Concept = await createEntityInstance(
     "sku",
     userId,
     formValues
@@ -573,7 +573,7 @@ export async function createItemRFQ(formValues: any) {
   );
 
   // the_rfq_buyer
-  const buyerConcept: LConcept = await GetTheConceptLocal(
+  const buyerConcept: Concept = await GetTheConceptLocal(
     profileStorageData?.entityId
   );
   await CreateConnectionBetweenEntityLocal(
@@ -629,7 +629,7 @@ export async function getBuyerAgentData(
   userId: number,
   token: string
 ) {
-  let buyerAgentEntityConcept: LConcept;
+  let buyerAgentEntityConcept: Concept;
 
   let search = new SearchStructure();
   search.composition = "the_buyeragent";

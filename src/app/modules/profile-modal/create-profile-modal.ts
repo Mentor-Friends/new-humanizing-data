@@ -27,7 +27,7 @@ export default async function createProfileModalHTML() {
         </header>
         <section id="profile" style="display:block">
             <h2>Profile</h2>
-            <p id="about" style="color:black">A highly motivated software developer with 5 years of experience in developing web applications. Strong background in JavaScript, HTML, CSS, and modern frameworks.</p>
+            <p id="about" style="color:black"></p>
         </section>
         <section id="exp" style="display:block">
           <h2>Experience</h2>

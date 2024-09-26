@@ -18,7 +18,7 @@ export async function dailyAttendanceHTML() {
     "0" +
     (new Date().getMonth() + 1)
   ).slice(-2)}-${("0" + new Date().getDate()).slice(-2)}`;
-  const dailyAttendanceList = await searchUserAttendance(
+  const dailyAttendanceList: any = await searchUserAttendance(
     userConceptId,
     dailyDate
   );

@@ -34,7 +34,7 @@ export default class extends mainViewClass {
     const profileStorageData: any = await getLocalStorageData();
     const userConceptId = profileStorageData?.userConcept;
 
-    const [dailyAttendanceList, monthlyAttendanceList] = await Promise.all([
+    const [dailyAttendanceList, monthlyAttendanceList]: any = await Promise.all([
       searchUserAttendance(userConceptId, dailyDate),
       searchUserAttendance(userConceptId, monthlyDate),
     ]);

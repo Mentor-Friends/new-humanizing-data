@@ -591,10 +591,7 @@ export async function saveProfileDetails(e: Event) {
     testProfile?.id,
     testProfile?.userId,
     firstNameConcept?.id,
-    firstNameConcept?.userId,
     testProfile?.id,
-    firstNameConcept?.sessionInformationId,
-    firstNameConcept?.sessionInformationUserId
   );
 
   const inputLastName = <HTMLInputElement>document.getElementById("last_name");
@@ -611,10 +608,7 @@ export async function saveProfileDetails(e: Event) {
     testProfile?.id,
     testProfile?.userId,
     lastNameConcept?.id,
-    lastNameConcept?.userId,
     testProfile?.id,
-    lastNameConcept?.sessionInformationId,
-    lastNameConcept?.sessionInformationUserId
   );
 
   const inputCompany = <HTMLInputElement>document.getElementById("company");
@@ -631,10 +625,7 @@ export async function saveProfileDetails(e: Event) {
     testProfile?.id,
     testProfile?.userId,
     companyConcept?.id,
-    companyConcept?.userId,
-    testProfile?.id,
-    companyConcept?.sessionInformationId,
-    companyConcept?.sessionInformationUserId
+    testProfile?.id
   );
 
   const inputPhone = <HTMLInputElement>document.getElementById("phone");
@@ -651,10 +642,7 @@ export async function saveProfileDetails(e: Event) {
     testProfile?.id,
     testProfile?.userId,
     phoneConcept?.id,
-    phoneConcept?.userId,
     testProfile?.id,
-    phoneConcept?.sessionInformationId,
-    phoneConcept?.sessionInformationUserId
   );
 
   const inputWebsite = <HTMLInputElement>document.getElementById("website");
@@ -671,10 +659,7 @@ export async function saveProfileDetails(e: Event) {
     testProfile?.id,
     testProfile?.userId,
     websiteConcept?.id,
-    websiteConcept?.userId,
     testProfile?.id,
-    websiteConcept?.sessionInformationId,
-    websiteConcept?.sessionInformationUserId
   );
 
   const inputEmail = <HTMLInputElement>document.getElementById("email");
@@ -691,10 +676,7 @@ export async function saveProfileDetails(e: Event) {
     testProfile?.id,
     testProfile?.userId,
     emailConcept?.id,
-    emailConcept?.userId,
     testProfile?.id,
-    emailConcept?.sessionInformationId,
-    emailConcept?.sessionInformationUserId
   );
 
   await SyncData.SyncDataOnline();
@@ -935,24 +917,24 @@ export async function getProfileData() {
   
     inputFirstName.value =
       data?.the_profile_first_name?.[0]?.data?.the_first_name ||
-      profileList?.entity?.person?.first_name || '';
+      profileList?.entity?.person?.first_name || "";
 
     const inputLastName = <HTMLInputElement>(
       document.getElementById("last_name")
     );
     inputLastName.value =
       data?.the_profile_last_name?.[0]?.data?.the_last_name ||
-      profileList?.entity?.person?.last_name;
+      profileList?.entity?.person?.last_name ||"";
 
     const inputEmail = <HTMLInputElement>document.getElementById("email");
     inputEmail.value =
       data?.the_profile_email?.[0]?.data?.the_email ||
-      profileList?.entity?.person?.email;
+      profileList?.entity?.person?.email || "";
 
     const inputPhone = <HTMLInputElement>document.getElementById("phone");
     inputPhone.value =
       data?.the_profile_phone?.[0]?.data?.the_phone ||
-      profileList?.entity?.person?.phone;
+      profileList?.entity?.person?.phone || "";
 
     const inputDob = <HTMLInputElement>document.getElementById("dob");
     inputDob.value = data?.the_profile_dob?.[0]?.data?.the_dob || "";

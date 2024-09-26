@@ -1,8 +1,8 @@
 // import { Concept, MakeTheInstanceConcept, SyncData } from "mftsccs-browser";
 import {
+  Concept,
   GetLink,
   GetTheConceptLocal,
-  LConcept,
   LocalSyncData,
   MakeTheInstanceConceptLocal,
   SearchLinkInternal,
@@ -107,8 +107,8 @@ export async function getTypeList() {
 
   if (values.length) {
     const typeEntityId = values?.[0]?.id;
-    const typeResponse: LConcept = await GetTheConceptLocal(typeEntityId);
-    const typeNameConcept: LConcept = await MakeTheInstanceConceptLocal(
+    const typeResponse: Concept = await GetTheConceptLocal(typeEntityId);
+    const typeNameConcept: Concept = await MakeTheInstanceConceptLocal(
       `name`,
       `Standard`,
       false,
@@ -181,11 +181,11 @@ export async function getCategoryList() {
     const categoryEntityId = values?.[0]?.id;
     categoryListHTML = values;
     return;
-    const categoryResponse: LConcept = await GetTheConceptLocal(
+    const categoryResponse: Concept = await GetTheConceptLocal(
       categoryEntityId
     );
 
-    const categoryNameConcept: LConcept = await MakeTheInstanceConceptLocal(
+    const categoryNameConcept: Concept = await MakeTheInstanceConceptLocal(
       `name`,
       `Services`,
       false,
@@ -207,7 +207,7 @@ export async function getCategoryList() {
   return;
 
   // create first the_itemcategory
-  const categoryEntityConcept: LConcept = await MakeTheInstanceConceptLocal(
+  const categoryEntityConcept: Concept = await MakeTheInstanceConceptLocal(
     `the_itemcategory`,
     "",
     true,
@@ -216,7 +216,7 @@ export async function getCategoryList() {
     999
   );
 
-  const categoryNameConcept: LConcept = await MakeTheInstanceConceptLocal(
+  const categoryNameConcept: Concept = await MakeTheInstanceConceptLocal(
     `name`,
     `Products`,
     false,
@@ -282,9 +282,9 @@ export async function updateItemCategory(e: any) {
     }
 
     // create link category with type
-    // const categoryResponse: LConcept = await GetTheConceptLocal(selectedCategory);
+    // const categoryResponse: Concept = await GetTheConceptLocal(selectedCategory);
 
-    // const typeNameResponse:LConcept = await GetTheConceptLocal(100475888)
+    // const typeNameResponse:Concept = await GetTheConceptLocal(100475888)
 
     // await CreateConnectionBetweenEntityLocal(
     //   categoryResponse,
@@ -560,10 +560,10 @@ export async function createCustomCategory(
   if (values.length) {
     const categoryEntityId = values?.[0]?.id;
 
-    const categoryResponse: LConcept = await GetTheConceptLocal(
+    const categoryResponse: Concept = await GetTheConceptLocal(
       categoryEntityId
     );
-    const categoryNameConcept: LConcept = await MakeTheInstanceConceptLocal(
+    const categoryNameConcept: Concept = await MakeTheInstanceConceptLocal(
       `name`,
       selectedCategory,
       false,
@@ -582,7 +582,7 @@ export async function createCustomCategory(
     // await LocalSyncData.SyncDataOnline();
     return categoryResponse;
   } else {
-    const categoryEntityConcept: LConcept = await MakeTheInstanceConceptLocal(
+    const categoryEntityConcept: Concept = await MakeTheInstanceConceptLocal(
       `the_itemcategory`,
       "",
       true,
@@ -591,7 +591,7 @@ export async function createCustomCategory(
       999
     );
 
-    const categoryNameConcept: LConcept = await MakeTheInstanceConceptLocal(
+    const categoryNameConcept: Concept = await MakeTheInstanceConceptLocal(
       `name`,
       selectedCategory,
       false,
@@ -626,8 +626,8 @@ export async function createItemType(selectedCategory: any, selectedType: any) {
     const typeEntityId = values?.[0]?.id;
     console.log("typeEntityId", typeEntityId);
 
-    const typeResponse: LConcept = await GetTheConceptLocal(typeEntityId);
-    const typeNameConcept: LConcept = await MakeTheInstanceConceptLocal(
+    const typeResponse: Concept = await GetTheConceptLocal(typeEntityId);
+    const typeNameConcept: Concept = await MakeTheInstanceConceptLocal(
       `name`,
       selectedType,
       false,
@@ -643,7 +643,7 @@ export async function createItemType(selectedCategory: any, selectedType: any) {
     );
 
     // Link type name with the category
-    const categoryResponse: LConcept = await GetTheConceptLocal(
+    const categoryResponse: Concept = await GetTheConceptLocal(
       selectedCategory
     );
     await CreateConnectionBetweenEntityLocal(
@@ -655,7 +655,7 @@ export async function createItemType(selectedCategory: any, selectedType: any) {
     await LocalSyncData.SyncDataOnline();
   } else {
     // create the_itemtype
-    const itemTypeConcept: LConcept = await MakeTheInstanceConceptLocal(
+    const itemTypeConcept: Concept = await MakeTheInstanceConceptLocal(
       `the_itemtype`,
       "",
       true,
@@ -664,7 +664,7 @@ export async function createItemType(selectedCategory: any, selectedType: any) {
       999
     );
 
-    const typeNameConcept: LConcept = await MakeTheInstanceConceptLocal(
+    const typeNameConcept: Concept = await MakeTheInstanceConceptLocal(
       `name`,
       selectedType,
       false,
@@ -680,7 +680,7 @@ export async function createItemType(selectedCategory: any, selectedType: any) {
     );
 
     // Link type name with the category
-    const categoryResponse: LConcept = await GetTheConceptLocal(
+    const categoryResponse: Concept = await GetTheConceptLocal(
       selectedCategory
     );
     await CreateConnectionBetweenEntityLocal(
@@ -705,7 +705,7 @@ export async function createItem(formValues: any) {
     title: itemName,
   });
 
-  const itemEntityConcept: LConcept = await MakeTheInstanceConceptLocal(
+  const itemEntityConcept: Concept = await MakeTheInstanceConceptLocal(
     "the_item",
     "",
     true,
@@ -721,7 +721,7 @@ export async function createItem(formValues: any) {
   for (const [key, value] of Object.entries(formValues)) {
     let ObjKey = key;
 
-    const keyConcept: LConcept = await MakeTheInstanceConceptLocal(
+    const keyConcept: Concept = await MakeTheInstanceConceptLocal(
       `${ObjKey}`,
       `${value}`,
       false,
@@ -738,7 +738,7 @@ export async function createItem(formValues: any) {
 
   if (attachedImageConcepts) {
     await Promise.all(
-      attachedImageConcepts?.map(async (imageConcept: LConcept) => {
+      attachedImageConcepts?.map(async (imageConcept: Concept) => {
         return await CreateConnectionBetweenEntityLocal(
           itemEntityConcept,
           imageConcept,
@@ -751,7 +751,7 @@ export async function createItem(formValues: any) {
   return itemEntityConcept;
 }
 
-export async function updateItem(itemEntityConcept: LConcept) {
+export async function updateItem(itemEntityConcept: Concept) {
   const profileStorageData: any = await getLocalStorageData();
   const userId = profileStorageData?.userId;
   const userEntityId = profileStorageData?.entityId;
@@ -781,7 +781,7 @@ export async function updateItem(itemEntityConcept: LConcept) {
 
 export async function getAgentEntityConcept(
   agentType: string,
-  itemEntityConcept: LConcept,
+  itemEntityConcept: Concept,
   token: string,
   userEntityId: number,
   userId: number
@@ -821,7 +821,7 @@ export async function _updateItem(itemEntityConcept: any) {
   const userConceptId = profileStorageData?.userConcept;
   const token = profileStorageData?.token;
 
-  let sellerEntityConcept: LConcept;
+  let sellerEntityConcept: Concept;
 
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");

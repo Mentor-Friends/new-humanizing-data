@@ -1,7 +1,7 @@
 import {
   GetCompositionListWithId,
   GetTheConceptLocal,
-  LConcept,
+  Concept,
   LocalSyncData,
 } from "mftsccs-browser";
 // import { getLocalStorageData } from "../../services/helper.service";
@@ -55,12 +55,12 @@ export async function submitListingForm(e: any) {
   );
   console.log("selectedPlatform ->", selectedPlatform);
 
-  const listingPlatformConcept: LConcept = await GetTheConceptLocal(
+  const listingPlatformConcept: Concept = await GetTheConceptLocal(
     selectedPlatform?.id
   );
   console.log("listingPlatformConcept ->", listingPlatformConcept);
 
-  const itemConcept: LConcept = await GetTheConceptLocal(itemId);
+  const itemConcept: Concept = await GetTheConceptLocal(itemId);
   console.log("itemConcept ->", itemConcept);
 
   // await CreateConnectionBetweenEntityLocal(

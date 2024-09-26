@@ -27,7 +27,7 @@ export async function handleMonthlyDateChange(
   const monthlyDate = `${yearSelect.value}-${
     parseInt(monthSelect.value) + 1 < 9 ? "0" : ""
   }${parseInt(monthSelect.value) + 1}`;
-  const monthlyAttendanceList = await searchUserAttendance(
+  const monthlyAttendanceList: any = await searchUserAttendance(
     currentUserConceptId ? currentUserConceptId : userConceptId,
     monthlyDate
   );
@@ -128,7 +128,7 @@ export function enableButtons(attendanceList: Attendance[]) {
   }
   // for absent case checkin and checkout value is ''
   let checkin = true;
-  for (let i = 0; i < attendanceList.length; i++) {
+  for (let i = 0; i < attendanceList?.length; i++) {
     const attendance = attendanceList[i];
     if (!attendance.checkin && !attendance.checkout) {
       checkin = true;

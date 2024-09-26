@@ -7,6 +7,7 @@ import { getLocalStorageData } from "../../../services/helper.service";
 import { searchUserAttendance } from "../../../pages/attendance/attendance.helper";
 import { CreateConnectionBetweenEntityLocal } from "../../../services/entity.service";
 import { createEntityInstance } from "../../../services/createEntityInstance.service";
+import { logout } from "../../top-nav/top-navigation.service";
 
 let processingAttendance = false;
 
@@ -24,62 +25,65 @@ export async function handleAttendanceClick() {
     "checkout-btn"
   ) as HTMLButtonElement;
 
-  const userConcept = await GetTheConceptLocal(userConceptId);
+  try {
+    const userConcept = await GetTheConceptLocal(userConceptId);
 
-  // check if the user have already logged in
-  const attendanceList = await searchUserAttendance(
-    userConceptId,
-    new Date().toISOString().slice(0, 10)
-  );
-  const attendanceConcept = await haveActiveAttendance(attendanceList);
-  console.log(attendanceConcept);
-  console.log("attendanceList", attendanceConcept);
+    // check if the user have already logged in
+    const attendanceList = await searchUserAttendance(
+      userConceptId,
+      new Date().toISOString().slice(0, 10)
+    );
+    const attendanceConcept = await haveActiveAttendance(attendanceList);
 
-  if (attendanceConcept) {
-    // checkout
-    const checkoutConcept = await MakeTheInstanceConceptLocal(
-      "checkout",
-      new Date().toISOString(),
-      false,
-      userId,
-      4
-    );
-    await CreateConnectionBetweenEntityLocal(
-      attendanceConcept,
-      checkoutConcept,
-      "checkout"
-    );
-    // enable checkin
-    checkInBtn.disabled = false;
-    checkOutBtn.disabled = true;
-  } else {
-    console.log("checkin");
+    if (attendanceConcept) {
+      // checkout
+      const checkoutConcept = await MakeTheInstanceConceptLocal(
+        "checkout",
+        new Date().toISOString(),
+        false,
+        userId,
+        4
+      );
+      await CreateConnectionBetweenEntityLocal(
+        attendanceConcept,
+        checkoutConcept,
+        "checkout"
+      );
+      // enable checkin
+      checkInBtn.disabled = false;
+      checkOutBtn.disabled = true;
+    } else {
+      // checkin
+      const attendanceEntityConcept = await createEntityInstance(
+        "attendance",
+        userId,
+        {
+          date: new Date().toISOString(),
+          checkin: new Date().toISOString(),
+          status: "Present",
+        }
+      );
+      await CreateConnectionBetweenEntityLocal(
+        userConcept,
+        attendanceEntityConcept,
+        "s_attendance"
+      );
 
-    // checkin
-    const attendanceEntityConcept = await createEntityInstance(
-      "attendance",
-      userId,
-      {
-        date: new Date().toISOString(),
-        checkin: new Date().toISOString(),
-        status: "Present",
-      }
-    );
-    await CreateConnectionBetweenEntityLocal(
-      userConcept,
-      attendanceEntityConcept,
-      "s_attendance"
-    );
+      // enable checkout
+      checkInBtn.disabled = true;
+      checkOutBtn.disabled = false;
+    }
 
-    // enable checkout
-    checkInBtn.disabled = true;
-    checkOutBtn.disabled = false;
+    await LocalSyncData.SyncDataOnline();
+    processingAttendance = false;
+    // setTimeout(() => location.reload(), 500);
+    location.reload();
+  } catch (err: any) {
+    console.error(err, err.status);
+    if (err.status === 401) {
+      logout();
+    }
   }
-
-  await LocalSyncData.SyncDataOnline();
-  processingAttendance = false;
-  // setTimeout(() => location.reload(), 500);
-  location.reload()
 }
 
 async function haveActiveAttendance(attendanceList: any) {
@@ -88,7 +92,7 @@ async function haveActiveAttendance(attendanceList: any) {
   let checkin = true;
   let attendanceId = 0;
   let ids: any[] = [];
-  for (let i = 0; i < attendanceList.length; i++) {
+  for (let i = 0; i < attendanceList?.length; i++) {
     const attendance = attendanceList[i];
     ids.push(attendance.id);
     if (!attendance.checkin && !attendance.checkout) {
@@ -99,7 +103,6 @@ async function haveActiveAttendance(attendanceList: any) {
       attendanceId = attendance.id;
     }
   }
-  console.log(ids, "ids");
   if (!checkin) return await GetTheConceptLocal(attendanceId);
   return;
   if (attendanceList[0]?.checkin && !attendanceList[0]?.checkout)

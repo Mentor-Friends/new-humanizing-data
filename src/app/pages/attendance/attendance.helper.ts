@@ -6,6 +6,7 @@ import {
 import { MONTHS } from "../../constants/time.constants";
 import { getLocalStorageData } from "../../services/helper.service";
 import { getCompanyEmployee } from "./employees-attendance/employees-attendance.service";
+import { logout } from "../../modules/top-nav/top-navigation.service";
 
 export type Attendance = {
   id: any;
@@ -85,11 +86,11 @@ export function getDateInMonth(year: number, month: number) {
  * @param tbodyId string
  */
 export function inverseTableRows(tbodyId: string) {
-    const tbody = document.getElementById(tbodyId) as HTMLTableSectionElement;
-    if (tbody) {
-      const rows = Array.from(tbody.rows);
-      rows.reverse().forEach(row => tbody.appendChild(row));
-    }
+  const tbody = document.getElementById(tbodyId) as HTMLTableSectionElement;
+  if (tbody) {
+    const rows = Array.from(tbody.rows);
+    rows.reverse().forEach((row) => tbody.appendChild(row));
+  }
 }
 
 /**
@@ -102,64 +103,65 @@ export async function searchUserAttendance(
   compositionId: number,
   searchDate: string
 ) {
-  const profileStorageData: any = await getLocalStorageData();
-  const token = profileStorageData?.token;
+  try {
+    const profileStorageData: any = await getLocalStorageData();
+    const token = profileStorageData?.token;
 
-  const dateFilter = new FilterSearch();
-  dateFilter.type = "date";
-  dateFilter.logicoperator = "like";
-  dateFilter.search = `%${searchDate}%`;
-  dateFilter.composition = false;
+    const dateFilter = new FilterSearch();
+    dateFilter.type = "date";
+    dateFilter.logicoperator = "like";
+    dateFilter.search = `%${searchDate}%`;
+    dateFilter.composition = false;
 
-  // const absentFilter = new FilterSearch();
-  // absentFilter.type = "status";
-  // absentFilter.logicoperator = "=";
-  // absentFilter.search = `Absent`;
-  // absentFilter.composition = false;
+    // const absentFilter = new FilterSearch();
+    // absentFilter.type = "status";
+    // absentFilter.logicoperator = "=";
+    // absentFilter.search = `Absent`;
+    // absentFilter.composition = false;
 
-  // const checkOutFilter = new FilterSearch();
-  // checkOutFilter.type = "checkout";
-  // checkOutFilter.logicoperator = "=";
-  // checkOutFilter.search = `%${searchDate}%`;
-  // checkOutFilter.composition = false;
+    // const checkOutFilter = new FilterSearch();
+    // checkOutFilter.type = "checkout";
+    // checkOutFilter.logicoperator = "=";
+    // checkOutFilter.search = `%${searchDate}%`;
+    // checkOutFilter.composition = false;
 
-  const searchQuery = new SearchQuery();
-  searchQuery.composition = compositionId;
-  searchQuery.fullLinkers = ["the_user_s_attendance"];
-  searchQuery.page = 1;
-  searchQuery.inpage = 100;
-  searchQuery.doFilter = true;
+    const searchQuery = new SearchQuery();
+    searchQuery.composition = compositionId;
+    searchQuery.fullLinkers = ["the_user_s_attendance"];
+    searchQuery.page = 1;
+    searchQuery.inpage = 100;
+    searchQuery.doFilter = true;
 
-  const attendanceQuery = new SearchQuery();
-  attendanceQuery.logic = "or";
-  attendanceQuery.selectors = [
-    "the_attendance_date",
-    "the_attendance_checkin",
-    "the_attendance_checkout",
-    "the_attendance_status",
-  ];
-  attendanceQuery.fullLinkers = ["the_attendance_date"];
-  attendanceQuery.inpage = 100;
-  attendanceQuery.logic = "or";
-  attendanceQuery.filterSearches = [dateFilter];
-  attendanceQuery.doFilter = true;
+    const attendanceQuery = new SearchQuery();
+    attendanceQuery.logic = "or";
+    attendanceQuery.selectors = [
+      "the_attendance_date",
+      "the_attendance_checkin",
+      "the_attendance_checkout",
+      "the_attendance_status",
+    ];
+    attendanceQuery.fullLinkers = ["the_attendance_date"];
+    attendanceQuery.inpage = 100;
+    attendanceQuery.logic = "or";
+    attendanceQuery.filterSearches = [dateFilter];
+    attendanceQuery.doFilter = true;
 
-  console.log(searchQuery);
+    console.log(searchQuery);
 
-  const user = await SearchLinkMultipleAll(
-    [searchQuery, attendanceQuery],
-    token
-  );
-  console.log(
-    searchDate,
-    "abcbedaa",
-    //user?.data?.["the_user"]?.["the_user_s_attendance"]
-    user
-  );
+    const user = await SearchLinkMultipleAll(
+      [searchQuery, attendanceQuery],
+      token
+    );
 
-  return await formatUserAttendance(
-    user?.data?.["the_user"]?.["the_user_s_attendance"]
-  );
+    return await formatUserAttendance(
+      user?.data?.["the_user"]?.["the_user_s_attendance"]
+    );
+  } catch (error: any) {
+    console.error(error, error.status);
+    if (error.status === 401) {
+      logout();
+    }
+  }
 }
 
 /**
