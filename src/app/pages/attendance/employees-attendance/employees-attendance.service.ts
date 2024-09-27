@@ -58,7 +58,7 @@ export async function getCompanyEmployee(filterDate?: string) {
   ];
   search3.fullLinkers = ["the_attendance_date"];
   search3.doFilter = true;
-  search3.inpage = 100;
+  search3.inpage = 1000;
 
   const searchData = await SearchLinkMultipleAll(
     [search1, search2, search3],

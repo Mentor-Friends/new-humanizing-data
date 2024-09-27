@@ -140,7 +140,7 @@ export async function searchUserAttendance(
     "the_attendance_status",
   ];
   attendanceQuery.fullLinkers = ["the_attendance_date"];
-  attendanceQuery.inpage = 100;
+  attendanceQuery.inpage = 1000;
   attendanceQuery.logic = "or";
   attendanceQuery.filterSearches = [dateFilter];
   attendanceQuery.doFilter = true;
