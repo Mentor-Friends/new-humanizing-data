@@ -23,6 +23,7 @@ import postedJobsIndex from "../pages/jobs/postedJobs/postedJobs.index.ts";
 import calendarIndex from "../pages/calendar/calendar.index.ts";
 import settingsIndex from "../pages/settings/settings.index.ts";
 import accountingIndex from "../pages/accounting/accounting.index.ts";
+import { Salary } from "../pages/salary/salary.index.ts";
 
 type RouteParams = {
   path: any;
@@ -158,6 +159,11 @@ const routes: RouteParams[] = [
   {
     path: "/leave-requests",
     content: leaveRequestsIndex,
+    isAuthenticated: true,
+  },
+  {
+    path: "/salary",
+    content: Salary,
     isAuthenticated: true,
   },
   {

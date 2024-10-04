@@ -82,9 +82,14 @@ export async function checkRouting() {
   //   : match.route.content;
 
   const view = new match.route.content(await getParams(match));
+  if(Object.getPrototypeOf(view.constructor).name  == "StatefulWidget"){
+    await view?.mount(app);
+  }
+  else{
+    const htmlContentDetails = await view?.getHtml();
+    app.innerHTML = htmlContentDetails;
 
-  const htmlContentDetails = await view?.getHtml();
-  app.innerHTML = htmlContentDetails;
+  }
 }
 
 export const renderContent = async (route: any) => {
