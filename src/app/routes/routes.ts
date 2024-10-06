@@ -24,6 +24,7 @@ import calendarIndex from "../pages/calendar/calendar.index.ts";
 import settingsIndex from "../pages/settings/settings.index.ts";
 import accountingIndex from "../pages/accounting/accounting.index.ts";
 import { Salary } from "../pages/salary/salary.index.ts";
+import { others } from "../pages/salary/others.index.ts";
 
 type RouteParams = {
   path: any;
@@ -164,6 +165,11 @@ const routes: RouteParams[] = [
   {
     path: "/salary",
     content: Salary,
+    isAuthenticated: true,
+  },
+  {
+    path: "/others",
+    content: others,
     isAuthenticated: true,
   },
   {
