@@ -5,12 +5,13 @@ import { StatefulWidget } from "../../default/StatefulWidget";
 export class Salary extends StatefulWidget{
 
     mainConcept: number = 0;
-    concepts: number[] = [];
+    compositionIds: number[] = [];
     internalConnections: number[] = [];
     reverse: number[] = [];
-    connections: number[] = [];
+    linkers: number[] = [];
     dependency: number[] = [];
     monthlySalary: number;
+    isDataLoaded: boolean = false;
     constructor(params: any){
         super(params);
         this.setTitle("Salary List");
@@ -35,7 +36,7 @@ export class Salary extends StatefulWidget{
     }
 
     async initializeData(){
-        await this.setDataDependency();
+        this.setState();
     }
 
 
@@ -46,26 +47,39 @@ export class Salary extends StatefulWidget{
                 this.isUpdating = true;
                 console.log("this is the updating method", id);
                 let that = this;
-                console.log("This is the old connections", that.connections,that.concepts);
+                console.log("This is the old connections", that.internalConnections,that.compositionIds);
 
                 setTimeout(function(){
                     let newConnection = ConnectionData.GetConnectionByOfTheConceptAndType(id, id);
                     for(let i=0 ;i< newConnection.length; i++){
-                        if(!that.connections.includes(newConnection[i])){
-                            that.connections.push(newConnection[i]);
-                            ConnectionData.GetConnection(newConnection[i]).then((conn)=>{
-                                if(!that.concepts.includes(conn.toTheConceptId)){
-                                    that.concepts.push(conn.toTheConceptId);
-                                    console.log("This is the updated connections", that.connections, that.concepts);
-                                    that.setState();
-                                     that.isUpdating = false;
-                                    console.log("now again this can work");
+                        
+                                ConnectionData.GetConnection(newConnection[i]).then((conn)=>{
+                                    if(conn.typeId == that.mainConcept){
+                                        if(!that.internalConnections.includes(conn.id)){
+                                            that.internalConnections.push(conn.id);
+                                        }
+                                    }
+                                    else{
+                                        if(!that.linkers.includes(conn.id)){
+                                            that.linkers.push(conn.id);
+                                        console.log("this is updating the linker", that.linkers);
 
-                                }
-                            })
-                            
-                        }
+                                        }
+                                    }
+
+                                    if(!that.compositionIds.includes(conn.toTheConceptId)){
+                                        that.compositionIds.push(conn.toTheConceptId);
+                                        console.log("This is the updated connections", that.internalConnections, that.compositionIds, that.linkers);
+                                         that.isUpdating = false;
+                                        console.log("now again this can work");
+    
+                                    }
+                                    that.setState();
+
+                                });
+
                     }
+
 
                 }, 1000);
             }
@@ -97,7 +111,7 @@ export class Salary extends StatefulWidget{
         if (myIncreaseButton) {
             myIncreaseButton.onclick = () => {
                 console.log("this is the initial count", this.monthlySalary);
-                this.setState();
+              //  this.setState();
             };
         }
     }
@@ -107,35 +121,37 @@ export class Salary extends StatefulWidget{
     async setDataDependency(){
 
         let searchQuery = new SearchQuery();
-        searchQuery.composition= 100128392;
+        searchQuery.composition= 100716269;
         this.mainConcept = searchQuery.composition;
         searchQuery.inpage = 10;
         searchQuery.listLinkers = ["my_console_s"];
 
         let searchQuery2 = new SearchQuery();
         searchQuery2.listLinkers = ["read_access_by"];
-        let conceptsConnections = await SearchLinkMultipleApi([searchQuery, searchQuery2]);
-        
-        this.mainConcept = searchQuery.composition;
-        const result = conceptsConnections;
-        this.concepts = result.compositionIds;
-        this.internalConnections = result.internalConnections;
-        this.connections = result.linkers;
-        this.reverse = result.reverse;
-        if(this.internalConnections.length > 1){
-            console.log("this is the con", this.internalConnections);
-            let allConnections = await GetConnectionBulk(this.internalConnections);
-            for(let i=0; i< allConnections.length; i++){
-                if(!this.dependency.includes(allConnections[i].ofTheConceptId)){
-                    this.dependency.push(allConnections[i].ofTheConceptId);
 
-                }
-                if(!this.dependency.includes(allConnections[i].toTheConceptId)){
-                    this.dependency.push(allConnections[i].toTheConceptId);
+        this.mainData =  await SearchLinkMultipleAll([searchQuery, searchQuery2], "", this);
+        console.log("this is the main data", this.mainData);
+        // let conceptsConnections = await SearchLinkMultipleApi([searchQuery, searchQuery2]);
+        // this.mainConcept = searchQuery.composition;
+        // const result = conceptsConnections;
+        // this.concepts = result.compositionIds;
+        // this.internalConnections = result.internalConnections;
+        // this.connections = result.linkers;
+        // this.reverse = result.reverse;
+        // if(this.internalConnections.length > 1){
+        //     console.log("this is the con", this.internalConnections);
+        //     let allConnections = await GetConnectionBulk(this.internalConnections);
+        //     for(let i=0; i< allConnections.length; i++){
+        //         if(!this.dependency.includes(allConnections[i].ofTheConceptId)){
+        //             this.dependency.push(allConnections[i].ofTheConceptId);
 
-                }
-            }
-        }
+        //         }
+        //         if(!this.dependency.includes(allConnections[i].toTheConceptId)){
+        //             this.dependency.push(allConnections[i].toTheConceptId);
+
+        //         }
+        //     }
+        // }
 
 
 
@@ -143,30 +159,30 @@ export class Salary extends StatefulWidget{
         //   GetConnectionDataPrefetch(linkers),
         //   GetCompositionFromConnectionsWithDataIdInObject(conceptIds,connections)
         // ]); 
-        await this.setState();
         this.listenToEvent(this.mainConcept);
 
 
     }
 
     async buildData(){
-        let externalConnections = this.connections.slice();
-        let internalConn = this.internalConnections.slice();
-        let conceptIds = this.concepts.slice();
-        let prefetchConnections = await GetConnectionDataPrefetch(externalConnections);
+        // let externalConnections = this.connections.slice();
+        // let internalConn = this.internalConnections.slice();
+        // let conceptIds = this.concepts.slice();
+        // let prefetchConnections = await GetConnectionDataPrefetch(externalConnections);
 
-        let concepts = await GetCompositionFromConnectionsWithDataIdInObject(conceptIds, internalConn);
+        // let concepts = await GetCompositionFromConnectionsWithDataIdInObject(conceptIds, internalConn);
         
-        let out = await FormatFromConnectionsAltered(prefetchConnections, concepts, this.mainConcept, this.reverse);
-        console.log("this is the data", out);
-        this.mainData = out;
+        // let out = await FormatFromConnectionsAltered(prefetchConnections, concepts, this.mainConcept, this.reverse);
+        // console.log("this is the data", out);
+        // this.mainData = out;
     }
 
 
 
 
     async setState(){
-        await this.buildData();
+        await this.setDataDependency();
+        //await this.buildData();
         this.render();
     }
 
