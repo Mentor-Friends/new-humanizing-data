@@ -1,11 +1,10 @@
-import { CreateConnectionBetweenTwoConceptsLocal, GetTheConcept, LocalSyncData, MakeTheInstanceConceptLocal, SearchLinkMultipleAllWidget, SearchQuery } from "mftsccs-browser";
+import { CreateConnectionBetweenTwoConceptsLocal, GetTheConcept, LocalSyncData, MakeTheInstanceConceptLocal, searchLinkMultipleListener, SearchQuery } from "mftsccs-browser";
 import { StatefulWidget } from "../../default/StatefulWidget";
 
 export class others extends StatefulWidget {
 
     mainConcept: number = 0;
     mainData: any;
-
 
     componentDidMount(): void {
         // this.initializeData();
@@ -22,12 +21,14 @@ export class others extends StatefulWidget {
         //     this.render();
         //   });
         // method two using the obserber and subscriber
-        new SearchLinkMultipleAllWidget([searchQuery, searchQuery2]).subscribe((value: any) => {
+        searchLinkMultipleListener([searchQuery, searchQuery2]).subscribe((value: any) => {
             this.mainData = value
             console.log('Value Triggered: ', value)
             this.render()
         })
       }
+
+
 
       
 
@@ -35,7 +36,6 @@ export class others extends StatefulWidget {
         this.element = document.createElement("div");
         this.element.innerHTML = await this.getHtml();
         parent.appendChild(this.element);
-    
         // Simulate componentDidMount by calling it after the component is inserted into the DOM
         this.componentDidMount();
       }
@@ -89,5 +89,6 @@ export class others extends StatefulWidget {
     
         return html;
       }
+
 
 }

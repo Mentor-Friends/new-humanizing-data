@@ -25,6 +25,7 @@ import settingsIndex from "../pages/settings/settings.index.ts";
 import accountingIndex from "../pages/accounting/accounting.index.ts";
 import { Salary } from "../pages/salary/salary.index.ts";
 import { others } from "../pages/salary/others.index.ts";
+import { userdata } from "../pages/salary/userdata.index.ts";
 
 type RouteParams = {
   path: any;
@@ -170,6 +171,11 @@ const routes: RouteParams[] = [
   {
     path: "/others",
     content: others,
+    isAuthenticated: true,
+  },
+  {
+    path: "/userdata",
+    content: userdata,
     isAuthenticated: true,
   },
   {
