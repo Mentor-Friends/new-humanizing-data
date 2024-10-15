@@ -26,6 +26,7 @@ import accountingIndex from "../pages/accounting/accounting.index.ts";
 import { Salary } from "../pages/salary/salary.index.ts";
 import { others } from "../pages/salary/others.index.ts";
 import { userdata } from "../pages/salary/userdata.index.ts";
+import { list } from "../pages/salary/list.index.ts";
 
 type RouteParams = {
   path: any;
@@ -171,6 +172,11 @@ const routes: RouteParams[] = [
   {
     path: "/others",
     content: others,
+    isAuthenticated: true,
+  },
+  {
+    path: "/mywidget",
+    content: list,
     isAuthenticated: true,
   },
   {

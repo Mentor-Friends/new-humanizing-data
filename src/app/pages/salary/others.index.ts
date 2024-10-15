@@ -32,18 +32,12 @@ export class others extends StatefulWidget {
 
       
 
-    async mount(parent: HTMLElement) {
-        this.element = document.createElement("div");
-        this.element.innerHTML = await this.getHtml();
-        parent.appendChild(this.element);
-        // Simulate componentDidMount by calling it after the component is inserted into the DOM
-        this.componentDidMount();
-      }
       addEvents() {
         let addData: any = document.getElementById("add-data");
     
         if (addData) {
           addData.onchange = () => {
+            console.log("this is the change data");
             let value = addData.value;
             MakeTheInstanceConceptLocal(
               "boomFolder",
@@ -79,11 +73,11 @@ export class others extends StatefulWidget {
     
       async getHtml(): Promise<string> {
         // (window as any).increaseCount = this.increaseCount;
+        console.log("this is rendering the html element");
         let html = "";
         html = `
                 <span>${JSON.stringify(this.mainData)}</span>
                 <br/>
-                <input id="add-data"/>
                 <button id="increase-count" class="btn btn-primary">Increase Salary</button>
             `;
     

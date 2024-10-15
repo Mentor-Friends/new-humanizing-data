@@ -179,22 +179,14 @@ export class Salary extends StatefulWidget {
   dependency: number[] = [];
   monthlySalary: number;
   isDataLoaded: boolean = false;
-  constructor(params: any) {
-    super(params);
+  constructor() {
+    super();
     this.setTitle("Salary List");
     this.monthlySalary = 0;
   }
   mainData: any;
   isUpdating = false;
 
-  async mount(parent: HTMLElement) {
-    this.element = document.createElement("div");
-    this.element.innerHTML = await this.getHtml();
-    parent.appendChild(this.element);
-
-    // Simulate componentDidMount by calling it after the component is inserted into the DOM
-    this.componentDidMount();
-  }
 
   componentDidMount(): void {
     // this.initializeData();
