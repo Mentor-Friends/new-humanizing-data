@@ -5,6 +5,7 @@ export class others extends StatefulWidget {
 
     mainConcept: number = 0;
     mainData: any;
+    data: number = 0;
 
     componentDidMount(): void {
         // this.initializeData();
@@ -33,52 +34,29 @@ export class others extends StatefulWidget {
       
 
       addEvents() {
-        let addData: any = document.getElementById("add-data");
-    
-        if (addData) {
-          addData.onchange = () => {
-            console.log("this is the change data");
-            let value = addData.value;
-            MakeTheInstanceConceptLocal(
-              "boomFolder",
-              value,
-              false,
-              999,
-              4,
-              999
-            ).then((concept) => {
-              GetTheConcept(this.mainConcept).then((mainCon) => {
-                CreateConnectionBetweenTwoConceptsLocal(
-                  mainCon,
-                  concept,
-                  "my_console",
-                  true
-                ).then(() => {
-                  LocalSyncData.SyncDataOnline();
-                });
-              });
-              console.log("this data has been updated", value);
-            });
+        let myIncreaseButton = document.getElementById("up-count");
+        if (myIncreaseButton) {
+
+      myIncreaseButton.onclick = (event: any) => {
+            console.log("this is clicked count", event);
+            this.data = this.data + 1;
+            this.setState(this.data);
           };
         }
+        console.log("thi sis the event", myIncreaseButton);
+
 
       }
 
-      async render() {
-        if (this.element) {
-          this.element.innerHTML = await this.getHtml();
-        }
-        this.addEvents();
-      }
     
       async getHtml(): Promise<string> {
         // (window as any).increaseCount = this.increaseCount;
         console.log("this is rendering the html element");
         let html = "";
         html = `
-                <span>${JSON.stringify(this.mainData)}</span>
+                <span>${this.data}</span>
                 <br/>
-                <button id="increase-count" class="btn btn-primary">Increase Salary</button>
+                <button id="up-count" class="btn btn-primary">Increase count</button>
             `;
     
         return html;

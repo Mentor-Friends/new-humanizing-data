@@ -424,7 +424,6 @@ export class Salary extends StatefulWidget {
             <span>${JSON.stringify(this.mainData)}</span>
             <br/>
             <input id="add-data"/>
-            <button id="increase-count" class="btn btn-primary">Increase Salary</button>
         `;
 
     return html;

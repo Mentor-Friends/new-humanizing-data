@@ -31,6 +31,9 @@ export class list extends StatefulWidget{
         })
     }
 
+
+
+
     addEvents() {
         let addData: any = document.getElementById("update-id");
         if (addData) {
@@ -46,23 +49,23 @@ export class list extends StatefulWidget{
     mountChildWidget(){
         // finding out if the widget is available
         let widget1 = document.getElementById("widget1");
-        let widget2 = document.getElementById("widget2");
+       // let widget2 = document.getElementById("widget2");
         if(widget1){
-          let newObject =new others();
-          newObject.parentElement = "widget1";
-          this.childComponents.push(newObject);
-          console.log("this is the widget", widget1, newObject);
-  
-          newObject.mount(widget1);
+          let search =new others();
+          search.onchange((mydata: any)=>{
+            this.data = mydata;
+            this.render();
+          });
+          this.childComponents.push(search);
+          search.mount(widget1);
         }
-        if(widget2){
-            let userData =new userdata();
-            userData.parentElement = "widget2";
-            this.childComponents.push(userData);
-            console.log("this is the widget", widget1, userData);
-    
-            userData.mount(widget2);
-          }
+        // if(widget2){
+        //     let userData =new userdata();
+        //     userData.parentElement = "widget2";
+        //     this.childComponents.push(userData);
+        //     console.log("this is the widget", widget1, userData);
+        //     userData.mount(widget2);
+        //   }
     }
 
 
@@ -70,10 +73,9 @@ export class list extends StatefulWidget{
     async getHtml(): Promise<string> {
         let html = "";
         html = `<div>
+        <span>parent widget: ${this.data}</span>
         <input placeholder="add" type="number" id="update-id"/>
-        ${JSON.stringify(this.folders)}
         <div id= "widget1" ></div>
-        <div id= "widget2" ></div>
 
         </div>`
         return html;
