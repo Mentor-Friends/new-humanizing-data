@@ -1,11 +1,9 @@
-import { GetLinkListener } from "mftsccs-browser";
+import {  DeleteConceptById, GetCompositionListListener,  NORMAL } from "mftsccs-browser";
 import { StatefulWidget } from "../../default/StatefulWidget";
-import { others } from "./others.index";
-import { userdata } from "./userdata.index";
 
 export class list extends StatefulWidget{
     counter: number = 0;
-    folders: any;
+    phonebooks: any = [];
     inpage: number= 10;
     page: number = 1;
     id: number = 100128392;
@@ -14,9 +12,9 @@ export class list extends StatefulWidget{
 
     componentDidMount(): void {
 
-        GetLinkListener(this.id, this.linker, this.inpage, this.page).subscribe((output: any)=>{
+        GetCompositionListListener("the_phonebook", 10267, 10, 1, NORMAL).subscribe((output: any)=>{
             console.log("this is the output", output);
-            this.folders = output;
+            this.phonebooks = output;
             this.render();
         })
         this.mountChildWidget();
@@ -24,59 +22,88 @@ export class list extends StatefulWidget{
 
 
     updateComponent(){
-        GetLinkListener(this.id, this.linker, this.inpage, this.page).subscribe((output: any)=>{
-            console.log("this is the output after update", output);
-            this.folders = output;
-            this.render();
-        })
+
     }
 
 
 
 
     addEvents() {
-        let addData: any = document.getElementById("update-id");
-        if (addData) {
-          addData.onchange = () => {
-            console.log("this is updating", addData.value);
-            this.id = addData.value;
-            this.updateComponent();
-          };
+      let tableElement = this.getElementById("mainbody");
+      console.log("this is the element", tableElement);
+      if(this.phonebooks.length > 0){
+        for(let i= 0; i< this.phonebooks.length; i++){
+          let row = document.createElement("tr");
+          let name = document.createElement("span");
+          let nameValue = this.phonebooks[i].the_phonebook.name
+          let phoneValue = this.phonebooks[i].the_phonebook.phone
+          name.innerHTML = nameValue;
+          let phone = document.createElement("span");
+          phone.innerHTML = phoneValue;
+          let edit = document.createElement("button");
+
+          edit.setAttribute('class', 'btn btn-primary');
+          edit.setAttribute('padding', "10px");
+          edit.id = this.phonebooks[i].the_phonebook.id;
+          edit.innerHTML = "edit";
+
+          let del = document.createElement("button");
+          del.setAttribute('class', 'btn btn-primary');
+          del.setAttribute('padding', "10px");
+          del.id = this.phonebooks[i].the_phonebook.id;
+          del.innerHTML = "Delete";
+
+          del.onclick = () =>{
+            DeleteConceptById(this.phonebooks[i].the_phonebook.id);
+            that.notify();
+          }
+          let that = this;
+          edit.onclick = () =>{
+            that.data = {
+              "id": edit.id,
+              "name": nameValue,
+              "phone": phoneValue
+            }
+            console.log("this is the update click", that.data, that.subscribers);
+            
+            that.notify();
+          }
+          row.appendChild(name);
+          row.appendChild(phone);
+          row.appendChild(edit);
+          row.appendChild(del);
+          tableElement.append(row);
         }
+
 
       }
 
+      }
+
+
     mountChildWidget(){
-        // finding out if the widget is available
-        let widget1 = document.getElementById("widget1");
-       // let widget2 = document.getElementById("widget2");
-        if(widget1){
-          let search =new others();
-          search.onchange((mydata: any)=>{
-            this.data = mydata;
-            this.render();
-          });
-          this.childComponents.push(search);
-          search.mount(widget1);
-        }
-        // if(widget2){
-        //     let userData =new userdata();
-        //     userData.parentElement = "widget2";
-        //     this.childComponents.push(userData);
-        //     console.log("this is the widget", widget1, userData);
-        //     userData.mount(widget2);
-        //   }
+
     }
 
 
 
     async getHtml(): Promise<string> {
-        let html = "";
-        html = `<div>
-        <span>parent widget: ${this.data}</span>
-        <input placeholder="add" type="number" id="update-id"/>
-        <div id= "widget1" ></div>
 
+        let html = "";
+
+        html = `<div>
+        <table>
+        <thead>
+          <tr>
+              <th>name</th>
+              <th>phone</th>
+          </tr>
+        </thead>
+        <tbody id= mainbody>
+
+        </tbody>
+        </table>
+        
         </div>`
         return html;
     }

@@ -1,4 +1,4 @@
-import { CreateConnectionBetweenTwoConceptsLocal, GetTheConcept, LocalSyncData, MakeTheInstanceConceptLocal, searchLinkMultipleListener, SearchQuery } from "mftsccs-browser";
+import { searchLinkMultipleListener, SearchQuery } from "mftsccs-browser";
 import { StatefulWidget } from "../../default/StatefulWidget";
 
 export class others extends StatefulWidget {

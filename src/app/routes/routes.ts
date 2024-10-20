@@ -27,6 +27,8 @@ import { Salary } from "../pages/salary/salary.index.ts";
 import { others } from "../pages/salary/others.index.ts";
 import { userdata } from "../pages/salary/userdata.index.ts";
 import { list } from "../pages/salary/list.index.ts";
+import { creator } from "../pages/salary/creator.ts";
+import { crud } from "../pages/salary/crud.ts";
 
 type RouteParams = {
   path: any;
@@ -177,6 +179,16 @@ const routes: RouteParams[] = [
   {
     path: "/mywidget",
     content: list,
+    isAuthenticated: true,
+  },
+  {
+    path: "/creator",
+    content: creator,
+    isAuthenticated: true,
+  },
+  {
+    path: "/crud",
+    content: crud,
     isAuthenticated: true,
   },
   {

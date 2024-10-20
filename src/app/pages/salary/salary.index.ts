@@ -6,7 +6,6 @@ import {
   LocalSyncData,
   MakeTheInstanceConceptLocal,
   NORMAL,
-  SearchLinkMultipleAll,
   searchLinkMultipleListener,
   SearchQuery,
 } from "mftsccs-browser";
@@ -35,26 +34,18 @@ export class Salary extends StatefulWidget {
   componentDidMount(): void {
 
     let searchQuery = new SearchQuery();
-    searchQuery.composition= 100802846;
+    searchQuery.composition= 100128392;
     this.mainConcept = searchQuery.composition;
-    searchQuery.inpage = 100;
-    searchQuery.fullLinkers = ["the_entity_s_widgetcode"];
+    searchQuery.inpage = 10;
+    searchQuery.listLinkers = ["my_console_s"];
     let searchQuery2 = new SearchQuery();
-    searchQuery2.fullLinkers = [            "the_widgetcode",
-      "the_widgetcode_name",
-      "the_widgetcode_html",
-      "the_widgetcode_css",
-      "the_widgetcode_js",
-      "the_widgetcode_timestamp"];
-
-      // SearchLinkMultipleAll([searchQuery, searchQuery2], "").then((value: any) => {
-      //     this.mainData = value;
-      //     console.log(this.mainData);
-      // });
-    searchLinkMultipleListener([searchQuery, searchQuery2], "", DATAID).subscribe((value: any) => {
+    searchQuery2.listLinkers = ["read_access_by"];
+    let startTime = new Date().getTime();
+    searchLinkMultipleListener([searchQuery, searchQuery2], "", NORMAL).subscribe((value: any) => {
         this.mainData = value
         console.log('Value Triggered: ', value)
         this.render()
+        console.log("this is the time taken for the work to complete", new Date().getTime() - startTime);
     })
   }
 
