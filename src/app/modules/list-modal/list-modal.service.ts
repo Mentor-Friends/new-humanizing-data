@@ -24,6 +24,7 @@ export async function getListingPlatforms() {
   console.log("listingItemData ->", listingItemData);
 
   const listingPlatforms = platformList
+  
     ?.map((list: any) => {
       let updatedList: any;
       if (listingItemData?.data?.listing === list?.data?.the_listing) {
@@ -62,6 +63,7 @@ export async function submitListingForm(e: any) {
 
   const itemConcept: Concept = await GetTheConceptLocal(itemId);
   console.log("itemConcept ->", itemConcept);
+  console.log(`Connecting item with ID: ${itemId} to platform with ID: ${listingPlatformConcept}`);
 
   // await CreateConnectionBetweenEntityLocal(
   //   listingPlatformConcept,
@@ -74,6 +76,8 @@ export async function submitListingForm(e: any) {
     listingPlatformConcept,
     "s_listing"
   );
+  console.log(itemConcept,listingPlatformConcept,"both connection");
+  
 
   await LocalSyncData.SyncDataOnline();
 

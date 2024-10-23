@@ -15,6 +15,20 @@
   "dependencies": {
     "@fullcalendar/core": "^6.1.15",
     "@fullcalendar/daygrid": "^6.1.15",
-    "mftsccs-browser": "^100.0.88"
+    "@tiptap/core": "^2.8.0",
+    "@tiptap/extension-blockquote": "^2.8.0",
+    "@tiptap/extension-bold": "^2.8.0",
+    "@tiptap/extension-bullet-list": "^2.8.0",
+    "@tiptap/extension-link": "^2.8.0",
+    "@tiptap/extension-ordered-list": "^2.8.0",
+    "@tiptap/extension-paragraph": "^2.8.0",
+    "@tiptap/extension-placeholder": "^2.8.0",
+    "@tiptap/extension-text-style": "^2.8.0",
+    "@tiptap/extension-underline": "^2.8.0",
+    "@tiptap/pm": "^2.8.0",
+    "@tiptap/starter-kit": "^2.8.0",
+    "froala-editor": "^4.3.0",
+    "mftsccs-browser": "^100.0.88",
+    "vue-quill-editor": "^3.0.6"
   }
 }

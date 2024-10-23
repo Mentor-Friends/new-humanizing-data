@@ -23,6 +23,8 @@ import postedJobsIndex from "../pages/jobs/postedJobs/postedJobs.index.ts";
 import calendarIndex from "../pages/calendar/calendar.index.ts";
 import settingsIndex from "../pages/settings/settings.index.ts";
 import accountingIndex from "../pages/accounting/accounting.index.ts";
+import adminJobListIndex from "../pages/jobs/adminJobList/adminJobList.index.ts";
+import adminAddJobIndex from "../pages/jobs/adminAddJob/adminAddJob.index.ts";
 
 type RouteParams = {
   path: any;
@@ -168,7 +170,19 @@ const routes: RouteParams[] = [
     path: "/accounting",
     content: accountingIndex,
     isAuthenticated: true,
-  }
+  },
+
+  //admin
+  {
+    path: "/career",
+    content: adminJobListIndex,
+    isAuthenticated: true,
+  },
+  {
+    path: "/career/create-new-posting",
+    content: adminAddJobIndex,
+    isAuthenticated: true,
+  },
 ];
 
 export default routes;

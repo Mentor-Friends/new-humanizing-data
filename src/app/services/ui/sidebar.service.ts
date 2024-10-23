@@ -8,7 +8,7 @@ export async function sidebarHTML() {
   (window as any).openSubMenu = openSubMenu;
 
   return `
-    <div id="sidebar" class="fixed z-10 w-80 top-0 left-0 h-screen border-r-1 border-r-gray-200 drop-shadow-lg bg-gradient-to-b from-green-800 via-green-900 via-50% to-gray-900 overflow-y-auto transition ease-out duration-1000 transform opacity-100 hidden">
+    <div id="sidebar"  [ngClass]="openSidebar ? 'md:pl-64 p-5' : 'p-5'" class="fixed z-10 w-80 top-0 left-0 h-screen border-r-1 border-r-gray-200 drop-shadow-lg bg-gradient-to-b from-green-800 via-green-900 via-50% to-gray-900 overflow-y-auto transition ease-out duration-1000 transform opacity-100 hidden">
         <div class="flex flex-row items-center justify-center my-8">
             <img class="w-64" src="/images/humanizing-data.png" alt="Humanizing Data Logo">
         </div>
@@ -32,6 +32,7 @@ export async function sidebarHTML() {
             </li>
         </div>
     </div>
+    
   `;
 }
 
@@ -41,13 +42,20 @@ export function sidebarMenu() {
           <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>
           <span class="sr-only">Icon Menu</span>
       </a>
+
+      
   `;
 }
 
 export function openSidebar() {
   console.log("open");
   const sidebar = document.getElementById("sidebar");
-  if (sidebar) sidebar.classList.remove("hidden");
+  // const content = document.getElementById("content");
+
+  // if (sidebar) sidebar.classList.remove("translate-x-[-100%]");
+  if (sidebar) 
+  sidebar.classList.remove("hidden");
+  // content.classList.remove("flex")
 }
 
 export function closeSidebar() {
@@ -183,6 +191,33 @@ const menus = async () => {
         {
           url: "/employee/attendance",
           name: "Employee Attendance",
+          permission: await hasPermission(
+            Permission.attendance,
+            PermissionAction.delete
+          ),
+        },
+      ],
+    },
+    {
+      url: "/career",
+      svg: `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M160-80q-33 0-56.5-23.5T80-160v-440q0-33 23.5-56.5T160-680h200v-120q0-33 23.5-56.5T440-880h80q33 0 56.5 23.5T600-800v120h200q33 0 56.5 23.5T880-600v440q0 33-23.5 56.5T800-80H160Zm0-80h640v-440H600q0 33-23.5 56.5T520-520h-80q-33 0-56.5-23.5T360-600H160v440Zm80-80h240v-18q0-17-9.5-31.5T444-312q-20-9-40.5-13.5T360-330q-23 0-43.5 4.5T276-312q-17 8-26.5 22.5T240-258v18Zm320-60h160v-60H560v60Zm-200-60q25 0 42.5-17.5T420-420q0-25-17.5-42.5T360-480q-25 0-42.5 17.5T300-420q0 25 17.5 42.5T360-360Zm200-60h160v-60H560v60ZM440-600h80v-200h-80v200Zm40 220Z"/></svg>`,
+      name: "Career",
+      permission: await hasPermission(
+        Permission.employee,
+        PermissionAction.delete
+      ),
+      subMenus: [
+        {
+          url: "/career",
+          name: "All job postings",
+          permission: await hasPermission(
+            Permission.attendance,
+            PermissionAction.delete
+          ),
+        },
+        {
+          url: "/career/create-new-posting",
+          name: "Add job postings",
           permission: await hasPermission(
             Permission.attendance,
             PermissionAction.delete

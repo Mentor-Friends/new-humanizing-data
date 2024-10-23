@@ -11,5 +11,5 @@ export default {
     esbuildOptions: {
       target: "es2022",
     }
-  }
+  },
 }

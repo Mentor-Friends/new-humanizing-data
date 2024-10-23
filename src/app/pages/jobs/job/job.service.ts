@@ -344,8 +344,12 @@ export async function getJobDetails(productId: number) {
       "the_item_country",
       "the_item_quantity",
       "the_item_quality",
+      "the_item_field",
       "the_item_s_image",
       "the_item_s_listing",
+      "the_item_number",
+      "the_item_expiry",
+      "the_item_skills"
     ];
     searchfirst.inpage = 100;
 
@@ -437,31 +441,37 @@ export async function getJobDetails(productId: number) {
       let listedInfoEl = "";
 
       let accessibleButtons = "";
-      if (isItemListedByMe) {
-        if (product?.data?.listing) {
-          listedInfoEl = `
-            <hr class="my-6 md:my-8 border-gray-200 dark:border-gray-800" />
-            <p>Listed at: ${product?.data?.listing}</p>
-          `;
-        }
-        accessibleButtons = `
-          <button class="bg-green-500 text-white rounded-md px-4 py-2 hover:bg-green-700 transition" onclick="openModal('list-modal')">
-            List this Item
-          </button>
+      // if (isItemListedByMe) {
+      //   if (product?.data?.listing) {
+      //     listedInfoEl = `
+      //       <hr class="my-6 md:my-8 border-gray-200 dark:border-gray-800" />
+      //       <p>Listed at: ${product?.data?.listing}</p>
+      //     `;
+      //   }
+      //   // accessibleButtons = `
+      //   //   <button class="bg-green-500 text-white rounded-md px-4 py-2 hover:bg-green-700 transition" onclick="openModal('list-modal')">
+      //   //     List this Item
+      //   //   </button>
 
-          <button class="bg-rose-500 text-white rounded-md px-4 py-2 hover:bg-rose-700 transition"
-            onclick="openModal('modelConfirm')">
-            Update Item SKU
-          </button>
-        `;
+      //   //   <button class="bg-rose-500 text-white rounded-md px-4 py-2 hover:bg-rose-700 transition"
+      //   //     onclick="openModal('modelConfirm')">
+      //   //     Update Item SKU
+      //   //   </button>
+      //   // `;
 
-        // check job applicants here
-        jobApplicants = await getJobApplicants(Number(productId));
-      } else {
+      //   // check job applicants here
+      //   jobApplicants = await getJobApplicants(Number(productId));
+      // } else {
         const isJobApplied: any = await getMyAppliedJobStatus(
           Number(productId)
         );
-        if (isJobApplied) {
+        if (isItemListedByMe) {
+          accessibleButtons=`  <p class=" text-black" >
+              You cannout apply job you are admin
+            </p>`
+      }
+      else{
+        if (isJobApplied ) {
           accessibleButtons = `
             <button disabled class="bg-green-500 text-white rounded-md px-4 py-2 bg-green-700 transition">
               Already applied
